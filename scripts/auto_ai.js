@@ -19,29 +19,10 @@ async function run() {
     }
     const reportPath = path.join(folderPath, 'report.json');
 
-    console.log("Đang kiểm tra danh sách mô hình Gemini khả dụng...");
+    const model = 'gemini-3.6-flash';
+    console.log(`Đang gọi Google Gemini API với mô hình: ${model}...`);
 
-    // Tự động lấy danh sách model được cấp phép cho API key này
-    let modelName = 'models/gemini-2.5-flash';
-    try {
-        const listRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`);
-        const listData = await listRes.json();
-        if (listData.models && listData.models.length > 0) {
-            const viableModel = listData.models.find(m => 
-                m.supportedGenerationMethods?.includes('generateContent') && 
-                (m.name.includes('flash') || m.name.includes('gemini-2') || m.name.includes('gemini-1.5') || m.name.includes('pro'))
-            );
-            if (viableModel) {
-                modelName = viableModel.name;
-            }
-        }
-    } catch (e) {
-        console.log("Không thể lấy danh sách model động, dùng mặc định...");
-    }
-
-    console.log(`Đang gọi Gemini với mô hình: ${modelName}`);
-
-    const url = `https://generativelanguage.googleapis.com/v1beta/${modelName}:generateContent?key=${apiKey}`;
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
 
     const prompt = `Bạn là hệ thống cào và phân tích dữ liệu vĩ mô Việt Nam. Hãy thực hiện toàn bộ các yêu cầu, quy tắc và cấu trúc được mô tả trong tài liệu sau để tạo ra file dữ liệu JSON chuẩn cho tháng ${folderName}:\n\n${skillContent}`;
 
