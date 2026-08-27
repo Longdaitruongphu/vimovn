@@ -2,7 +2,6 @@ const fs = require('fs');
 const path = require('path');
 
 async function run() {
-    // Tự động nhận diện cả key tên GEMINI_API_KEY lẫn OPENAI_API_KEY mà bạn đã tạo trên GitHub
     const apiKey = process.env.GEMINI_API_KEY || process.env.OPENAI_API_KEY;
     if (!apiKey) {
         console.error("Lỗi: Không tìm thấy API Key trong GitHub Secrets");
@@ -20,9 +19,29 @@ async function run() {
     }
     const reportPath = path.join(folderPath, 'report.json');
 
-    console.log(`Đang gọi Google Gemini API...`);
+    console.log("Đang kiểm tra danh sách mô hình Gemini khả dụng...");
 
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+    // Tự động lấy danh sách model được cấp phép cho API key này
+    let modelName = 'models/gemini-2.5-flash';
+    try {
+        const listRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`);
+        const listData = await listRes.json();
+        if (listData.models && listData.models.length > 0) {
+            const viableModel = listData.models.find(m => 
+                m.supportedGenerationMethods?.includes('generateContent') && 
+                (m.name.includes('flash') || m.name.includes('gemini-2') || m.name.includes('gemini-1.5') || m.name.includes('pro'))
+            );
+            if (viableModel) {
+                modelName = viableModel.name;
+            }
+        }
+    } catch (e) {
+        console.log("Không thể lấy danh sách model động, dùng mặc định...");
+    }
+
+    console.log(`Đang gọi Gemini với mô hình: ${modelName}`);
+
+    const url = `https://generativelanguage.googleapis.com/v1beta/${modelName}:generateContent?key=${apiKey}`;
 
     const prompt = `Bạn là hệ thống cào và phân tích dữ liệu vĩ mô Việt Nam. Hãy thực hiện toàn bộ các yêu cầu, quy tắc và cấu trúc được mô tả trong tài liệu sau để tạo ra file dữ liệu JSON chuẩn cho tháng ${folderName}:\n\n${skillContent}`;
 
