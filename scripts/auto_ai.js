@@ -2,62 +2,70 @@ const fs = require('fs');
 const path = require('path');
 
 async function run() {
-    const apiKey = process.env.OPENAI_API_KEY;
+    // Tự động nhận diện cả key tên GEMINI_API_KEY lẫn OPENAI_API_KEY mà bạn đã tạo trên GitHub
+    const apiKey = process.env.GEMINI_API_KEY || process.env.OPENAI_API_KEY;
     if (!apiKey) {
-        console.error("Lỗi: Không tìm thấy OPENAI_API_KEY");
+        console.error("Lỗi: Không tìm thấy API Key trong GitHub Secrets");
         process.exit(1);
     }
 
-    // Đọc hướng dẫn từ file SKILL.md
     const skillContent = fs.readFileSync(path.join(__dirname, '../SKILL.md'), 'utf-8');
 
-    // Tạo tên thư mục theo tháng hiện tại (VD: 2026-08)
     const date = new Date();
     const folderName = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
     const folderPath = path.join(__dirname, '..', folderName);
 
-    // Tạo thư mục nếu chưa có
     if (!fs.existsSync(folderPath)) {
-        fs.mkdirSync(folderPath);
+        fs.mkdirSync(folderPath, { recursive: true });
     }
     const reportPath = path.join(folderPath, 'report.json');
 
-    console.log(`Đang gọi OpenAI API...`);
+    console.log(`Đang gọi Google Gemini API...`);
 
-    // Gửi yêu cầu cho ChatGPT
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${apiKey}`
-        },
-        body: JSON.stringify({
-            model: "gpt-4o",
-            messages: [
-                { 
-                    role: "system", 
-                    content: "Bạn là hệ thống cào và phân tích dữ liệu vĩ mô. Hãy làm theo hướng dẫn. CHỈ trả về dữ liệu thuần định dạng JSON, không giải thích, không kèm Markdown block (```json)." 
-                },
-                { 
-                    role: "user", 
-                    content: `Thực hiện hướng dẫn sau để lấy dữ liệu mới nhất của tháng hiện tại:\n\n${skillContent}` 
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+
+    const prompt = `Bạn là hệ thống cào và phân tích dữ liệu vĩ mô Việt Nam. Hãy thực hiện toàn bộ các yêu cầu, quy tắc và cấu trúc được mô tả trong tài liệu sau để tạo ra file dữ liệu JSON chuẩn cho tháng ${folderName}:\n\n${skillContent}`;
+
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                contents: [
+                    {
+                        role: 'user',
+                        parts: [{ text: prompt }]
+                    }
+                ],
+                generationConfig: {
+                    temperature: 0.2,
+                    responseMimeType: "application/json"
                 }
-            ],
-            temperature: 0.2
-        })
-    });
+            })
+        });
 
-    const data = await response.json();
-    if (data.choices && data.choices[0]) {
-        let jsonString = data.choices[0].message.content;
-        // Dọn dẹp nếu AI lỡ xuất kèm markdown
-        jsonString = jsonString.replace(/```json/g, '').replace(/```/g, '').trim();
+        const data = await response.json();
 
-        // Ghi đè vào file report.json
-        fs.writeFileSync(reportPath, jsonString);
+        if (!response.ok || data.error) {
+            console.error("Lỗi từ Google Gemini API:", JSON.stringify(data, null, 2));
+            process.exit(1);
+        }
+
+        const candidate = data.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (!candidate) {
+            console.error("Lỗi: Không nhận được nội dung trả về từ Gemini", JSON.stringify(data, null, 2));
+            process.exit(1);
+        }
+
+        let jsonString = candidate.trim();
+        jsonString = jsonString.replace(/^```json\s*/i, '').replace(/```\s*$/i, '').trim();
+
+        fs.writeFileSync(reportPath, jsonString, 'utf-8');
         console.log(`Đã cập nhật dữ liệu thành công vào: ${reportPath}`);
-    } else {
-        console.error("Lỗi từ API của AI:", JSON.stringify(data, null, 2));
+    } catch (err) {
+        console.error("Lỗi kết nối:", err);
         process.exit(1);
     }
 }

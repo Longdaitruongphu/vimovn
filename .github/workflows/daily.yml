@@ -3,7 +3,7 @@ name: Auto Daily Macro Report
 on:
   schedule:
     - cron: '0 23 * * *' # Chạy tự động 06:00 sáng giờ VN hàng ngày
-  workflow_dispatch: # Cho phép bấm chạy bằng tay
+  workflow_dispatch:
 
 jobs:
   build-and-update:
@@ -16,7 +16,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
 
       - name: Install dependencies
         run: |
@@ -29,7 +29,7 @@ jobs:
 
       - name: Call AI to fetch data and write report.json
         env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY || secrets.OPENAI_API_KEY }}
         run: node scripts/auto_ai.js
 
       - name: Verify data integrity
@@ -43,5 +43,5 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add .
-          git diff-index --quiet HEAD || git commit -m "auto: AI cap nhat du lieu ngay $(date +'%Y-%m-%d') [skip ci]"
+          git diff-index --quiet HEAD || git commit -m "auto: Gemini cap nhat du lieu ngay $(date +'%Y-%m-%d') [skip ci]"
           git push
