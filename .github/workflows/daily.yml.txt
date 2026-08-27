@@ -1,0 +1,47 @@
+name: Auto Daily Macro Report
+
+on:
+  schedule:
+    - cron: '0 23 * * *' # Chạy tự động 06:00 sáng giờ VN hàng ngày
+  workflow_dispatch: # Cho phép kích hoạt bằng tay trên Web
+
+jobs:
+  build-and-update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' 
+
+      - name: Install dependencies
+        run: |
+          cd scripts
+          npm install
+
+      - name: Generate current Month-Year variable
+        id: date
+        run: echo "MONTH=$(date +'%Y-%m')" >> $GITHUB_ENV
+
+      - name: Call AI to fetch data and write report.json
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: node scripts/auto_ai.js
+
+      - name: Verify data integrity
+        run: node scripts/verify_data.js --json=${{ env.MONTH }}/report.json --history=history.json
+
+      - name: Render new HTML Web
+        run: node scripts/render.js --json=${{ env.MONTH }}/report.json --history=history.json --out=index.html
+
+      - name: Commit and Push to GitHub
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git diff-index --quiet HEAD || git commit -m "auto: AI cap nhat du lieu ngay $(date +'%Y-%m-%d') [skip ci]"
+          git push
