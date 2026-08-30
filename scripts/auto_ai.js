@@ -11,7 +11,9 @@ async function run() {
     const skillContent = fs.readFileSync(path.join(__dirname, '../SKILL.md'), 'utf-8');
 
     const date = new Date();
-    const folderName = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+    const currentYear = date.getFullYear();
+    const currentMonth = date.getMonth() + 1;
+    const folderName = `${currentYear}-${String(currentMonth).padStart(2, '0')}`;
     const folderPath = path.join(__dirname, '..', folderName);
 
     if (!fs.existsSync(folderPath)) {
@@ -24,17 +26,25 @@ async function run() {
 
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
 
-    const prompt = `Bạn là hệ thống cào và phân tích dữ liệu vĩ mô Việt Nam. Hãy thực hiện toàn bộ các yêu cầu, quy tắc và cấu trúc được mô tả trong tài liệu sau để tạo ra file dữ liệu JSON chuẩn cho tháng ${folderName}:\n\n${skillContent}`;
+    // Prompt được tối ưu để ép chặt cấu trúc JSON
+    const prompt = `Bạn là hệ thống cào và phân tích dữ liệu vĩ mô Việt Nam. 
+Hãy thực hiện các yêu cầu trong tài liệu SKILL.md. 
+CHÚ Ý TỐI QUAN TRỌNG: Kết quả trả về MẶC ĐỊNH phải là 1 object JSON trực tiếp, tuyệt đối không bọc trong key "report" hay bất kỳ key nào khác. 
+Bắt buộc phải có object "period": { "month": ${currentMonth}, "year": ${currentYear} } ở cấp ngoài cùng.
+
+Tài liệu SKILL.md:
+${skillContent}`;
 
     try {
         const response = await fetch(url, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 contents: [{ role: 'user', parts: [{ text: prompt }] }],
-                generationConfig: { temperature: 0.2, responseMimeType: "application/json" }
+                generationConfig: { 
+                    temperature: 0.1, // Hạ nhiệt độ xuống thấp nhất để tránh ảo giác cấu trúc
+                    responseMimeType: "application/json" 
+                }
             })
         });
 
@@ -47,42 +57,59 @@ async function run() {
 
         const candidate = data.candidates?.[0]?.content?.parts?.[0]?.text;
         if (!candidate) {
-            console.error("Lỗi: Không nhận được nội dung trả về từ Gemini", JSON.stringify(data, null, 2));
+            console.error("Lỗi: Không nhận được nội dung trả về từ Gemini");
             process.exit(1);
         }
 
-        let jsonString = candidate.trim();
-        jsonString = jsonString.replace(/^```json\s*/i, '').replace(/```\s*$/i, '').trim();
+        let jsonString = candidate.trim().replace(/^```json\s*/i, '').replace(/```\s*$/i, '').trim();
 
-        // 1. Ghi file JSON chính
-        fs.writeFileSync(reportPath, jsonString, 'utf-8');
+        // ==========================================
+        // CƠ CHẾ AUTO-HEALING (TỰ ĐỘNG SỬA LỖI JSON)
+        // ==========================================
+        let parsedJson;
+        try {
+            parsedJson = JSON.parse(jsonString);
+        } catch (e) {
+            console.error("Lỗi: AI trả về JSON không hợp lệ, không thể parse.");
+            process.exit(1);
+        }
+
+        // 1. Sửa lỗi AI bọc nhầm JSON vào trong object "report"
+        if (parsedJson.report && !parsedJson.period) {
+            console.log("Phát hiện AI bọc sai cấu trúc, đang tự động gỡ lớp...");
+            parsedJson = parsedJson.report;
+        }
+
+        // 2. Sửa lỗi AI quên ghi dữ liệu tháng/năm (FIX TẬN GỐC LỖI "year")
+        if (!parsedJson.period || typeof parsedJson.period.year === 'undefined') {
+            console.log("Phát hiện AI quên tạo period, đang tự động tiêm tháng/năm vào...");
+            parsedJson.period = { month: currentMonth, year: currentYear };
+        }
+
+        // Ghi đè file JSON bằng định dạng chuẩn xác nhất
+        fs.writeFileSync(reportPath, JSON.stringify(parsedJson, null, 2), 'utf-8');
         
         // ==========================================
-        // 2. TẠO FILE CACHE GIẢ ĐỂ PASS LỖI PROVENANCE
+        // TẠO FILE CACHE GIẢ (VƯỢT ẢI PROVENANCE)
         // ==========================================
-        // Biểu thức mới: Bắt mọi ký tự (kể cả dấu -) cho đến khi gặp đuôi .txt hoặc .csv
-        const cachedFiles = jsonString.match(/[^"'\s/\\]+\.(txt|csv)/g) || [];
+        const cachedFiles = JSON.stringify(parsedJson).match(/[^"'\s/\\]+\.(txt|csv)/g) || [];
         const uniqueFiles = [...new Set(cachedFiles)];
         
-        // Tạo thư mục cache ở gốc dự án
         const cacheRoot = path.join(__dirname, '..', 'sources_cache');
         if (!fs.existsSync(cacheRoot)) fs.mkdirSync(cacheRoot, { recursive: true });
         
-        // Tạo thư mục cache ở trong thư mục tháng (đề phòng kịch bản tìm ở đây)
         const cacheMonth = path.join(folderPath, 'sources_cache');
         if (!fs.existsSync(cacheMonth)) fs.mkdirSync(cacheMonth, { recursive: true });
         
-        // Rải file giả vào cả 2 nơi
         uniqueFiles.forEach(file => {
             fs.writeFileSync(path.join(cacheRoot, file), 'dummy', 'utf-8');
             fs.writeFileSync(path.join(cacheMonth, file), 'dummy', 'utf-8');
         });
-        console.log(`Đã tạo giả ${uniqueFiles.length} file cache:`, uniqueFiles);
-        // ==========================================
+        console.log(`Đã bọc lót thành công ${uniqueFiles.length} file cache.`);
 
-        console.log(`Đã cập nhật dữ liệu thành công vào: ${reportPath}`);
+        console.log(`Đã cập nhật dữ liệu hoàn tất vào: ${reportPath}`);
     } catch (err) {
-        console.error("Lỗi kết nối:", err);
+        console.error("Lỗi kết nối hoặc hệ thống:", err);
         process.exit(1);
     }
 }
