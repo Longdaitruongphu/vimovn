@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Báo cáo vĩ mô VN · Tháng 9/2026</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-0:#0a0a14; --bg-1:#10101f; --bg-2:#16162a;
+  --card:rgba(28,28,48,0.55); --card-solid:#1a1a2e;
+  --border:rgba(139,92,246,0.18); --border-hot:rgba(236,72,153,0.35);
+  --text:#f0f0ff; --text-dim:#8b8ba7; --text-faint:#5a5a72;
+  --purple:#a855f7; --purple-2:#8b5cf6; --pink:#ec4899; --cyan:#06b6d4;
+  --green:#10d98a; --green-soft:rgba(16,217,138,0.15);
+  --red:#ff4d6d; --red-soft:rgba(255,77,109,0.15); --amber:#fbbf24; --amber-soft:rgba(251,191,36,0.15);
+  --grad-main:linear-gradient(135deg,#a855f7 0%,#ec4899 100%);
+  --grad-cool:linear-gradient(135deg,#06b6d4 0%,#8b5cf6 100%);
+  --grad-bg:radial-gradient(ellipse at 20% 0%,rgba(139,92,246,0.15) 0%,transparent 50%),
+            radial-gradient(ellipse at 80% 100%,rgba(236,72,153,0.12) 0%,transparent 50%);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:var(--bg-0);color:var(--text);font-family:'Inter',sans-serif;line-height:1.5;overflow-x:hidden}
+body{background-image:var(--grad-bg);background-attachment:fixed;min-height:100vh}
+.mono{font-family:'JetBrains Mono',monospace;font-variant-numeric:tabular-nums}
+.container{max-width:1480px;margin:0 auto;padding:24px 32px 80px}
+.pos{color:var(--green)} .neg{color:var(--red)} .neu{color:var(--amber)}
+
+/* HERO — gradient + pattern thuần (KHÔNG phụ thuộc ảnh ngoài → ổn định khi offline) */
+.hero{background:
+  radial-gradient(ellipse at 85% -10%,rgba(168,85,247,0.35) 0%,transparent 55%),
+  radial-gradient(ellipse at 15% 120%,rgba(236,72,153,0.22) 0%,transparent 50%),
+  linear-gradient(160deg,#0b0b1a 0%,#13132a 45%,#1c1c3a 100%);
+  border:1px solid var(--border);border-radius:32px;padding:36px 44px;margin-bottom:20px;
+  position:relative;overflow:hidden;backdrop-filter:blur(20px)}
+.hero::after{content:'';position:absolute;inset:0;pointer-events:none;opacity:0.5;
+  background-image:
+    linear-gradient(rgba(139,92,246,0.05) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(139,92,246,0.05) 1px,transparent 1px);
+  background-size:44px 44px}
+.hero::before{content:'';position:absolute;top:-100px;right:-50px;width:400px;height:400px;
+  background:radial-gradient(circle,rgba(236,72,153,0.25),transparent 70%);filter:blur(40px)}
+.hero-top{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;flex-wrap:wrap;position:relative;z-index:2}
+.ticker-badge{display:inline-flex;align-items:center;gap:10px;background:var(--grad-main);color:#fff;
+  padding:6px 16px;border-radius:999px;font-weight:700;font-size:13px;letter-spacing:0.5px;
+  box-shadow:0 8px 24px rgba(168,85,247,0.4)}
+.update-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(16,217,138,0.15);color:var(--green);
+  padding:4px 12px;border-radius:999px;font-weight:600;font-size:11px;border:1px solid rgba(16,217,138,0.3);margin-left:8px}
+.report-title{font-size:38px;font-weight:800;margin-top:14px;letter-spacing:-1px;
+  background:linear-gradient(90deg,#fff,#c4b5fd);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.report-sub{color:var(--text-dim);margin-top:6px;font-size:14px}
+.verdict-block{text-align:right}
+.verdict-badge{display:inline-block;padding:8px 20px;border-radius:999px;font-weight:800;
+  font-size:13px;letter-spacing:0.5px;background:var(--amber);color:#000}
+.verdict-reason{color:var(--text-dim);font-size:12px;margin-top:8px;line-height:1.5;max-width:340px}
+.kpi-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:28px;position:relative;z-index:2}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:16px;backdrop-filter:blur(12px)}
+.kpi-label{font-size:11px;color:var(--text-faint);text-transform:uppercase;letter-spacing:1px;font-weight:600}
+.kpi-value{font-size:26px;font-weight:800;margin-top:4px}
+.kpi-delta{font-size:11px;margin-top:3px;color:var(--text-dim)}
+.flag-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;vertical-align:middle}
+.flag-green{background:var(--green)} .flag-red{background:var(--red)} .flag-amber{background:var(--amber)}
+
+/* NAV */
+.nav-tabs{position:sticky;top:0;z-index:50;display:flex;gap:8px;
+  background:rgba(10,10,20,0.85);backdrop-filter:blur(20px);
+  padding:14px 32px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  margin:0 -32px 28px;border-radius:0}
+.nav-tab{background:transparent;border:1px solid transparent;color:var(--text-dim);
+  padding:9px 18px;border-radius:10px;font-weight:600;font-size:13px;cursor:pointer;
+  transition:all .2s;font-family:'Inter',sans-serif}
+.nav-tab:hover{color:var(--text);background:rgba(168,85,247,0.08)}
+.nav-tab.active{background:var(--grad-main);color:#fff;box-shadow:0 4px 16px rgba(168,85,247,0.4)}
+
+/* GROUP SECTION */
+.group-section{display:none;animation:fadeUp .4s ease both}
+.group-section.active{display:block}
+.group-header{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.group-header h2{font-size:22px;font-weight:700;letter-spacing:-0.5px}
+.group-header .tag{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  padding:4px 10px;border-radius:6px;color:#fff}
+.tag.g1{background:var(--purple)} .tag.g2{background:var(--pink)}
+.tag.g3{background:var(--cyan);color:#000} .tag.g4{background:var(--green);color:#000}
+.tag.g5{background:var(--amber);color:#000} .tag.g6{background:var(--purple-2);color:#fff}
+.divider-line{flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent)}
+
+/* HIGHLIGHTS */
+.highlights{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
+.highlight-box{border-radius:18px;padding:18px 22px;backdrop-filter:blur(12px)}
+.highlight-box.neg{background:var(--red-soft);border:1px solid rgba(255,77,109,0.3)}
+.highlight-box.pos{background:var(--green-soft);border:1px solid rgba(16,217,138,0.3)}
+.hl-label{font-size:11px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:10px}
+.highlight-box.neg .hl-label{color:var(--red)}
+.highlight-box.pos .hl-label{color:var(--green)}
+.hl-items{list-style:none;padding:0;margin:0}
+.hl-items li{font-size:13px;color:var(--text-dim);padding:5px 0;line-height:1.5;
+  border-bottom:1px solid rgba(255,255,255,0.04)}
+.hl-items li:last-child{border-bottom:none}
+.hl-items li::before{content:'▸ ';color:var(--text-faint)}
+.hl-val{font-weight:700;font-family:'JetBrains Mono',monospace}
+
+/* DATA CARD — DÀY HƠN */
+.data-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.data-card{background:var(--card);border:1px solid var(--border);border-radius:16px;
+  padding:16px 18px;backdrop-filter:blur(12px);transition:transform .2s,border-color .2s;
+  display:flex;flex-direction:column;gap:6px}
+.data-card:hover{transform:translateY(-2px);border-color:var(--border-hot)}
+.data-card.signal-red{border-left:3px solid var(--red)}
+.data-card.signal-green{border-left:3px solid var(--green)}
+.data-card.signal-amber{border-left:3px solid var(--amber)}
+.data-card.wide{grid-column:1 / -1}
+.data-card.span2{grid-column:span 2}   /* phân cấp không gian: card chủ chốt 2/3 dòng */
+@media (max-width:600px){.data-card.wide,.data-card.span2{grid-column:span 1}}
+.dc-head{display:flex;justify-content:space-between;align-items:center}
+.dc-name{font-size:12px;color:var(--text-dim);font-weight:600}
+.dc-flag{font-size:11px}
+.dc-value{font-size:26px;font-weight:800;line-height:1.1}
+.dc-value .dc-unit{font-size:13px;color:var(--text-dim);font-weight:500;margin-left:3px}
+.dc-target-row{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--text-faint);margin-top:2px}
+.dc-target-badge{display:inline-block;padding:2px 7px;border-radius:5px;font-weight:700;font-size:10px}
+.dc-target-badge.over{background:var(--red-soft);color:var(--red)}
+.dc-target-badge.met{background:var(--green-soft);color:var(--green)}
+.dc-meta{display:flex;gap:12px;font-size:11px;color:var(--text-faint);flex-wrap:wrap;margin-top:2px}
+.dc-meta span strong{color:var(--text-dim)}
+.dc-progress{height:5px;background:rgba(255,255,255,0.08);border-radius:3px;overflow:hidden;margin-top:6px}
+.dc-progress-fill{height:100%;border-radius:3px}
+.dc-progress-fill.over{background:var(--red)}
+.dc-progress-fill.met{background:var(--green)}
+.dc-progress-fill.amber{background:var(--amber)}
+.dc-why{font-size:11px;color:var(--text-dim);line-height:1.5;margin-top:6px;
+  padding:7px 10px;background:rgba(168,85,247,0.05);border-left:2px solid var(--purple);border-radius:4px}
+.dc-why::before{content:'💡 ';filter:none}
+
+/* NARRATIVE — kể chuyện số liệu (2-4 câu, tone người kể chuyện) */
+/* ⚠️ PHÂN TẦNG: narrative nằm TRONG <details class="dc-readmore"> — ẩn mặc định,
+   bấm "📖 Đọc thêm" mới xổ ra. Giữ scan nhanh cho tầng 1 (số + why). */
+.dc-readmore{margin-top:8px}
+.dc-readmore summary{cursor:pointer;font-size:11px;font-weight:600;color:var(--cyan);
+  list-style:none;display:inline-flex;align-items:center;gap:5px;user-select:none;
+  padding:4px 10px;background:rgba(6,182,212,0.08);border:1px solid rgba(6,182,212,0.22);
+  border-radius:6px;font-family:'Inter',sans-serif;transition:background .2s}
+.dc-readmore summary:hover{background:rgba(6,182,212,0.16)}
+.dc-readmore summary::-webkit-details-marker{display:none}
+.dc-readmore summary::after{content:'▾';font-size:10px;transition:transform .2s}
+.dc-readmore[open] summary::after{transform:rotate(180deg)}
+.dc-readmore .dc-narrative{margin-top:10px}
+.dc-narrative{font-size:12px;color:var(--text);line-height:1.7;margin-top:8px;
+  padding:11px 13px;background:linear-gradient(135deg,rgba(6,182,212,0.09),rgba(168,85,247,0.05));
+  border-left:3px solid var(--cyan);border-radius:6px}
+.dc-narrative strong{color:var(--purple);font-weight:600}
+.dc-narrative .num{color:var(--cyan);font-weight:600;font-family:'JetBrains Mono',monospace}
+.dc-chart-btn{margin-top:8px;background:rgba(168,85,247,0.12);color:var(--purple);
+  border:1px solid rgba(168,85,247,0.25);padding:5px 12px;border-radius:8px;
+  font-size:11px;font-weight:600;cursor:pointer;transition:all .2s;font-family:'Inter',sans-serif;align-self:flex-start}
+.dc-chart-btn:hover{background:rgba(168,85,247,0.25)}
+
+/* NEWS ENRICHMENT — tin báo chí embed trong card */
+.dc-news{margin-top:8px;border-top:1px dashed rgba(139,92,246,0.15);padding-top:8px}
+.dc-news-item{padding:8px 10px;background:rgba(20,20,40,0.4);border-radius:8px;margin-bottom:6px;
+  border-left:2px solid var(--cyan);font-size:11px;line-height:1.5}
+.dc-news-item:last-child{margin-bottom:0}
+.dc-news-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:3px}
+.dc-news-title{color:var(--text);font-weight:600}
+.dc-news-title a{color:var(--cyan);text-decoration:none}
+.dc-news-title a:hover{text-decoration:underline}
+.dc-news-meta{font-size:10px;color:var(--text-faint);flex-shrink:0}
+.dc-news-insight{color:var(--text-dim);font-size:11px;margin-top:3px}
+.dc-news-insight::before{content:'💡 '}
+.dc-news-sentiment{display:inline-block;padding:1px 6px;border-radius:3px;font-size:9px;font-weight:700;margin-left:4px}
+.dc-news-sentiment.TÍCH{background:var(--green-soft);color:var(--green)}
+.dc-news-sentiment.TRUNG{background:var(--amber-soft);color:var(--amber)}
+.dc-news-sentiment.TIÊU{background:var(--red-soft);color:var(--red)}
+
+/* SPECIAL INSIGHT — phân tích chuyên sâu chủ đề (có banner ảnh) */
+.special-insight{background:linear-gradient(135deg,rgba(168,85,247,0.08),rgba(236,72,153,0.04));
+  border:1px solid var(--border-hot);border-radius:20px;padding:24px 26px;
+  backdrop-filter:blur(14px);margin-bottom:24px;grid-column:1 / -1;position:relative;overflow:hidden}
+.special-insight::before{content:'';position:absolute;top:-60px;right:-30px;width:250px;height:250px;
+  background:radial-gradient(circle,rgba(168,85,247,0.15),transparent 70%);filter:blur(30px)}
+
+/* (Đã bỏ banner ảnh/gradient — "khoảng trống chết" 140px. Insight bắt đầu thẳng bằng tiêu đề.) */
+.si-label{display:inline-flex;align-items:center;gap:8px;font-size:10px;font-weight:800;
+  letter-spacing:1.5px;text-transform:uppercase;color:var(--pink);
+  background:rgba(236,72,153,0.15);padding:5px 12px;border-radius:6px;margin-bottom:10px;position:relative;z-index:2}
+.si-title{font-size:20px;font-weight:800;letter-spacing:-0.5px;line-height:1.3;
+  margin-bottom:10px;position:relative;z-index:2}
+.si-summary{font-size:13px;color:var(--text-dim);line-height:1.6;margin-bottom:16px;
+  padding-bottom:14px;border-bottom:1px dashed rgba(139,92,246,0.15);position:relative;z-index:2}
+.si-section-label{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  color:var(--cyan);margin:14px 0 8px;display:flex;align-items:center;gap:6px;position:relative;z-index:2}
+.si-numbers{font-size:13px;color:var(--text);line-height:1.75;position:relative;z-index:2}
+.si-numbers strong{color:var(--purple);font-weight:600}
+.si-numbers .num{color:var(--cyan);font-weight:600;font-family:'JetBrains Mono',monospace}
+/* Layout 2 cột cho body insight: cột trái numbers, cột phải news (xếp dọc) */
+.si-body{display:grid;grid-template-columns:1.4fr 1fr;gap:24px;position:relative;z-index:2}
+.si-body .si-col-left{min-width:0}
+.si-body .si-col-right{min-width:0;display:flex;flex-direction:column;gap:10px}
+@media (max-width:1100px){.si-body{grid-template-columns:1fr;gap:16px}}
+.si-news-item{padding:10px 12px;background:rgba(20,20,40,0.5);border-radius:10px;
+  border-left:2px solid var(--cyan);font-size:11px;line-height:1.5}
+.si-news-head{display:flex;justify-content:space-between;align-items:baseline;gap:6px;margin-bottom:4px}
+.si-news-title{color:var(--text);font-weight:600}
+.si-news-title a{color:var(--cyan);text-decoration:none}
+.si-news-title a:hover{text-decoration:underline}
+.si-news-meta{font-size:10px;color:var(--text-faint);flex-shrink:0}
+.si-news-insight{color:var(--text-dim);font-size:11px;margin-top:3px}
+.si-news-insight::before{content:'💡 '}
+.si-news-sentiment{display:inline-block;padding:1px 6px;border-radius:3px;font-size:9px;font-weight:700;margin-left:4px}
+.si-news-sentiment.TÍCH{background:var(--green-soft);color:var(--green)}
+.si-news-sentiment.TRUNG{background:var(--amber-soft);color:var(--amber)}
+.si-news-sentiment.TIÊU{background:var(--red-soft);color:var(--red)}
+.si-cross{display:flex;flex-direction:column;gap:6px;position:relative;z-index:2}
+.si-cross-item{padding:7px 10px;background:rgba(6,182,212,0.06);border-left:2px solid var(--cyan);
+  border-radius:4px;font-size:11px;color:var(--text-dim);line-height:1.5}
+.si-cross-item::before{content:'🔗 ';color:var(--cyan)}
+/* Cross-story prose (thay cho liệt kê) */
+.si-cross-story{font-size:13px;color:var(--text);line-height:1.75;padding:14px 16px;
+  background:linear-gradient(135deg,rgba(6,182,212,0.08),rgba(168,85,247,0.04));
+  border-left:3px solid var(--cyan);border-radius:10px}
+.si-cross-story strong{color:var(--purple);font-weight:600}
+.si-cross-story .num{color:var(--cyan);font-weight:600;font-family:'JetBrains Mono',monospace}
+
+/* PANEL — phân tích chuyên sâu */
+.panel{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:20px;
+  backdrop-filter:blur(14px);margin-bottom:14px;grid-column:1 / -1}
+.panel-head{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.panel-title{font-size:15px;font-weight:700}
+.panel-note{font-size:11px;color:var(--text-faint);margin-left:auto}
+.panel-table{width:100%;border-collapse:collapse;font-size:12px}
+.panel-table th{text-align:left;padding:8px 10px;color:var(--text-faint);font-weight:600;
+  font-size:10px;text-transform:uppercase;letter-spacing:0.5px;border-bottom:1px solid var(--border)}
+.panel-table td{padding:8px 10px;border-bottom:1px solid rgba(139,92,246,0.06);vertical-align:middle}
+.panel-table tr:hover{background:rgba(168,85,247,0.04)}
+.panel-trend{font-size:11px;color:var(--text-dim);margin-top:10px;padding:8px 12px;
+  background:rgba(251,191,36,0.06);border-radius:8px}
+
+
+
+/* SECTION TITLE */
+.section-title{display:flex;align-items:center;gap:12px;margin:44px 0 20px}
+.section-title h2{font-size:22px;font-weight:700;letter-spacing:-0.5px}
+
+
+/* RISKS / CATALYSTS */
+.rc-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.rc-box{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:22px;backdrop-filter:blur(14px)}
+.rc-box.risks{border-left:3px solid var(--red)}
+.rc-box.catalysts{border-left:3px solid var(--green)}
+.rc-title{font-size:14px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.rc-item{padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:13px;color:var(--text-dim);line-height:1.5}
+.rc-item:last-child{border-bottom:none}
+.rc-level{display:inline-block;padding:2px 8px;border-radius:5px;font-size:10px;font-weight:700;margin-right:8px;letter-spacing:0.3px}
+.rc-level.critical{background:rgba(255,77,109,0.2);color:var(--red)}
+.rc-level.high{background:rgba(251,191,36,0.2);color:var(--amber)}
+.rc-level.medium{background:rgba(139,92,246,0.2);color:var(--purple)}
+
+/* KEY TAKEAWAYS */
+.takeaways{background:linear-gradient(135deg,rgba(168,85,247,0.1),rgba(236,72,153,0.06));
+  border:1px solid var(--border-hot);border-radius:20px;padding:24px 28px;backdrop-filter:blur(14px)}
+.takeaways ol{list-style:none;padding:0;margin:0;counter-reset:tk}
+.takeaways li{counter-increment:tk;padding:10px 0 10px 32px;position:relative;font-size:14px;color:var(--text);line-height:1.6}
+.takeaways li::before{content:counter(tk);position:absolute;left:0;top:10px;
+  width:22px;height:22px;background:var(--grad-main);color:#fff;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800}
+.takeaways li:first-child::before{background:var(--amber);color:#000}
+
+/* MODAL */
+.modal{display:none;position:fixed;inset:0;background:rgba(10,10,20,0.8);backdrop-filter:blur(8px);
+  z-index:100;padding:40px 20px;overflow:auto}
+.modal.active{display:flex;align-items:center;justify-content:center}
+.modal-content{background:var(--card-solid);border:1px solid var(--border-hot);
+  border-radius:20px;padding:28px;max-width:680px;width:100%;backdrop-filter:blur(20px)}
+.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.modal-head h3{font-size:18px;font-weight:700}
+.modal-close{background:rgba(255,255,255,0.08);border:none;color:var(--text);
+  width:32px;height:32px;border-radius:50%;font-size:20px;cursor:pointer;line-height:1}
+.modal-close:hover{background:rgba(255,77,109,0.2)}
+.modal-chart-wrap{position:relative;height:280px;margin-bottom:12px}
+
+/* FOOTER */
+footer{margin-top:60px;padding-top:24px;border-top:1px solid var(--border);
+  color:var(--text-faint);font-size:12px;text-align:center;line-height:1.8}
+footer a{color:var(--purple);text-decoration:none}
+.disclaimer{background:rgba(251,191,36,0.06);border:1px solid rgba(251,191,36,0.2);
+  border-radius:14px;padding:14px 18px;margin-top:24px;font-size:12px;color:var(--text-dim)}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+@media (max-width:1100px){
+  .kpi-strip{grid-template-columns:repeat(2,1fr)}
+  .highlights{grid-template-columns:1fr}
+  .data-grid{grid-template-columns:repeat(2,1fr)}
+  .panel{grid-column:span 2}
+  .rc-grid{grid-template-columns:1fr}
+}
+@media (max-width:600px){
+  .container{padding:16px}
+  .hero{padding:24px;border-radius:20px}
+  .report-title{font-size:28px}
+  .kpi-strip{grid-template-columns:1fr}
+  .nav-tabs{flex-wrap:wrap;padding:10px 16px}
+  .data-grid{grid-template-columns:1fr}
+  .panel{grid-column:span 1}
+  .nav-tab{padding:7px 12px;font-size:12px}
+}
+
+/* ═══════════ VISUAL V2 — sparkline · gauge · phân cấp · readability ═══════════ */
+
+/* Sparkline trong card — đường xu hướng nhỏ (hiện từ tháng 2+, không chờ 6 tháng) */
+.dc-spark-wrap{width:100%;height:44px;margin-top:6px;position:relative}
+.dc-spark{width:100%;height:44px;display:block}
+.dc-spark-label{font-size:10px;color:var(--text-faint);letter-spacing:0.5px;text-transform:uppercase;
+  margin-top:2px;display:flex;justify-content:space-between}
+.dc-spark-label .spark-newest{color:var(--cyan);font-weight:700}
+
+/* Gauge PMI — nửa vòng tròn với mốc 50 (SVG thuần, không phụ thuộc CDN) */
+.gauge-wrap{width:100%;max-width:240px;margin:8px auto 2px;position:relative}
+.gauge-wrap svg{width:100%;height:auto;display:block}
+.gauge-value{position:absolute;left:0;right:0;top:38%;transform:translateY(-50%);
+  font-size:26px;font-weight:800;text-align:center;line-height:1;
+  font-family:'JetBrains Mono',monospace;font-variant-numeric:tabular-nums}
+.gauge-threshold{position:absolute;left:50%;transform:translateX(-50%);
+  bottom:-22px;font-size:10px;color:var(--amber);font-weight:700;letter-spacing:0.5px;
+  background:rgba(251,191,36,0.12);padding:2px 8px;border-radius:6px;white-space:nowrap}
+
+/* Card chủ chốt — CPI/PMI/Cán cân TM: nổi bật hơn card thường */
+.data-card.primary{background:linear-gradient(160deg,rgba(28,28,48,0.75) 0%,rgba(44,36,72,0.6) 100%);
+  border:1px solid var(--border-hot);box-shadow:0 8px 28px rgba(168,85,247,0.14)}
+.data-card.primary .dc-value{font-size:32px}
+.data-card.primary .dc-name{color:var(--text);font-size:13px;font-weight:700}
+.data-card.primary .dc-flag{font-size:13px}
+
+/* Mũi tên tăng/giảm — màu theo hướng (JS tự chèn vào số có dấu + / -) */
+.arrow-up{color:var(--green);font-size:0.85em;margin-left:3px}
+.arrow-down{color:var(--red);font-size:0.85em;margin-left:3px}
+
+/* Readability — nâng cỡ chữ tối thiểu 11px → 12px */
+.dc-meta,.dc-why,.dc-narrative,.dc-news-item,.panel-trend,.pmi-item .note,
+.rc-item,.hl-items li,.si-summary,.si-numbers,.si-cross-story,.kpi-delta,
+.dc-news-insight,.dc-news-meta,.si-news-item{font-size:12px}
+.dc-news-title,.si-news-title{font-size:12px}
+.panel-table{font-size:12.5px}
+.panel-note,.dc-target-row{font-size:11.5px}
+.dc-why{font-size:12px;padding:8px 11px}
+.dc-narrative{font-size:12.5px;line-height:1.75}
+.verdict-reason{font-size:12.5px;max-width:380px}
+
+/* Số lớn trong hero KPI */
+.kpi-value{font-size:30px}
+
+@media (max-width:1100px){
+  .gauge-wrap{max-width:200px}
+}
+
+/* B1: So sánh tháng trước tự động (hiện khi history đủ 2 kỳ) */
+.dc-prev-delta{font-size:11px;font-weight:700;margin-top:3px;
+  font-family:'JetBrains Mono',monospace;font-variant-numeric:tabular-nums}
+
+/* B2: IN / PDF — nút + chế độ in gọn */
+.btn-print{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.07);
+  color:var(--text);border:1px solid var(--border);padding:6px 14px;border-radius:999px;
+  font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;
+  transition:background .2s;margin-top:12px}
+.btn-print:hover{background:rgba(168,85,247,0.2)}
+@media print{
+  .nav-tabs,.dc-chart-btn,.btn-print,.modal,.dc-readmore summary{display:none !important}
+  .dc-readmore .dc-narrative{display:block !important}   /* in: mở sẵn câu chuyện */
+  .group-section{display:block !important}               /* in: mọi tab hiện hết */
+  .hero,.special-insight,.data-card,.panel,.rc-box,.takeaways,.disclaimer{
+    break-inside:avoid;box-shadow:none}
+  body{background:#0a0a14;background-image:none}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact} /* giữ màu khi in PDF */
+}
+
+/* ═══════════ EDITORIAL — text + graph (thay thẻ card) ═══════════ */
+/* Bề rộng đọc giới hạn ~1120px (chuẩn báo chí: dòng chữ không trải cả màn hình 1480px) */
+.ed-section{display:flex;flex-direction:column;gap:18px;max-width:1120px;margin:0 auto;width:100%}
+.ed-lead{font-size:15px;line-height:1.85;color:var(--text);padding:18px 22px;
+  background:linear-gradient(135deg,rgba(6,182,212,0.07),rgba(168,85,247,0.04));
+  border-left:3px solid var(--cyan);border-radius:10px}
+.ed-lead .num{color:var(--cyan);font-weight:600;font-family:'JetBrains Mono',monospace}
+.ed-lead strong{color:var(--purple)}
+.ed-graph{background:var(--card);border:1px solid var(--border);border-radius:16px;
+  padding:16px 18px;backdrop-filter:blur(12px)}
+.ed-graph-title{font-size:11px;color:var(--text-faint);text-transform:uppercase;
+  letter-spacing:1px;font-weight:600;margin-bottom:10px}
+.ed-graph svg{width:100%;height:auto;display:block}
+.ed-items{display:grid;grid-template-columns:1fr;gap:8px}
+.ed-item{display:grid;grid-template-columns:230px 150px 1fr;align-items:baseline;gap:14px;
+  padding:11px 16px;background:var(--card);border:1px solid var(--border);
+  border-radius:12px;backdrop-filter:blur(12px);transition:border-color .2s}
+.ed-item:hover{border-color:var(--border-hot)}
+.ed-item .ed-name{font-size:13px;color:var(--text-dim);font-weight:600}
+.ed-item .ed-value{font-size:21px;font-weight:800;font-family:'JetBrains Mono',monospace;
+  font-variant-numeric:tabular-nums}
+.ed-item .ed-note{font-size:12px;color:var(--text-faint);line-height:1.5}
+.ed-item .ed-note .arrow-up,.ed-item .ed-note .arrow-down{font-size:0.9em}
+@media (max-width:900px){
+  .ed-item{grid-template-columns:1fr 1fr}
+  .ed-item .ed-note{grid-column:1 / -1}
+}
+@media (max-width:600px){
+  .ed-item{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="hero">
+    <div class="hero-top">
+      <div>
+        <div>
+          <span class="ticker-badge">📊 BÁO CÁO VĨ MÔ VIỆT NAM</span>
+          <span class="update-badge">✦ Tháng 9/2026</span>
+        </div>
+        <div class="report-title">Tình hình Kinh tế · Tiền tệ · Tài chính</div>
+        <div class="report-sub">Kỳ báo cáo: 2026-09 · Chốt dữ liệu: 2026-09-30 · 5/5 nguồn: PMI · NSO · Customs · VBMA · VNBA</div>
+      </div>
+      <div class="verdict-block">
+        <div class="verdict-badge" style="background:var(--green);color:#000">⚖️ TÍCH CỰC — MỞ RỘNG ỔN ĐỊNH</div>
+        <div class="verdict-reason">Sản xuất và xuất khẩu tăng trưởng mạnh mẽ, PMI duy trì trên ngưỡng 50 tháng thứ 6 liên tiếp. CPI kiểm soát tốt dưới mục tiêu 4.5%.</div>
+        <button class="btn-print" onclick="window.print()">🖨️ In / PDF</button>
+      </div>
+    </div>
+    <div class="kpi-strip">
+      <div class="kpi">
+        <div class="kpi-label"><span class="flag-dot flag-green"></span>CPI YoY</div>
+        <div class="kpi-value mono pos">3.82<span style="font-size:14px;color:var(--text-dim)">%</span></div>
+        <div class="kpi-delta pos">Dưới mục tiêu 4.5%</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label"><span class="flag-dot flag-green"></span>PMI Sản xuất</div>
+        <div class="kpi-value mono pos">52.4<span style="font-size:14px;color:var(--text-dim)">điểm</span></div>
+        <div class="kpi-delta pos">+0.3 điểm so T8</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label"><span class="flag-dot flag-green"></span>Cán cân TM</div>
+        <div class="kpi-value mono pos">+2.30<span style="font-size:14px;color:var(--text-dim)">tỷ USD</span></div>
+        <div class="kpi-delta pos">Thặng dư 9T +20.8 tỷ USD</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-label"><span class="flag-dot flag-green"></span>IIP YoY</div>
+        <div class="kpi-value mono pos">+8.50<span style="font-size:14px;color:var(--text-dim)">%</span></div>
+        <div class="kpi-delta pos">Chế biến chế tạo +9.8%</div>
+      </div></div>
+  </div>
+  
+  <nav class="nav-tabs"><button class="nav-tab active" data-target="group1">Tăng trưởng & Sản xuất</button><button class="nav-tab" data-target="group2">Ngoại thương & FDI</button><button class="nav-tab" data-target="group3">Lạm phát & Giá cả</button><button class="nav-tab" data-target="group4">Tiền tệ & Tài chính</button><button class="nav-tab" data-target="summary">📊 Tổng hợp</button></nav>
+  <section class="group-section active" id="group1">
+    <div class="group-header">
+      <span class="tag g1">01</span>
+      <h2>Sản xuất &amp; Tiêu dùng — Đà phục hồi mở rộng</h2>
+      <div class="divider-line"></div>
+      <span style="font-size:12px;color:var(--text-faint)">Nguồn: TCTK, S&amp;P Global</span>
+    </div>
+    
+    <div class="ed-section">
+        <div class="ed-lead">IIP tháng 9 duy trì đà phục hồi tích cực với mức tăng <span class="num">8.50%</span> YoY, trong đó ngành chế biến chế tạo đóng góp chủ lực tăng <span class="num">9.80%</span>. PMI sản xuất đạt <span class="num">52.4 điểm</span> — ghi nhận tháng thứ 6 liên tiếp nằm trên ngưỡng trung tính. Tổng mức bán lẻ hàng hóa và dịch vụ tiêu dùng tháng 9 tăng <span class="num">9.80%</span> YoY, phản ánh cầu nội địa tiếp tục cải thiện vững chắc.</div>
+        <div class="ed-graph"><div class="ed-graph-title">📈 PMI Sản xuất các tháng gần đây (Mốc trung tính 50.0)</div><svg viewBox="0 0 560 150" role="img" aria-label="Biểu đồ so sánh"><line x1="46" y1="124" x2="552" y2="124" stroke="rgba(139,92,246,0.25)" stroke-width="1" stroke-dasharray="4 4"/><rect x="68.8" y="26.3" width="55.7" height="97.7" rx="4" fill="#10d98a" opacity="0.85"/><text x="96.6" y="142.0" fill="#8b8ba7" font-size="10" text-anchor="middle">T6</text><text x="96.6" y="20.3" fill="#10d98a" font-size="11" font-weight="700" text-anchor="middle" font-family="JetBrains Mono, monospace">+51.2</text><rect x="170.0" y="25.1" width="55.7" height="98.9" rx="4" fill="#10d98a" opacity="0.85"/><text x="197.8" y="142.0" fill="#8b8ba7" font-size="10" text-anchor="middle">T7</text><text x="197.8" y="19.1" fill="#10d98a" font-size="11" font-weight="700" text-anchor="middle" font-family="JetBrains Mono, monospace">+51.8</text><rect x="271.2" y="24.6" width="55.7" height="99.4" rx="4" fill="#10d98a" opacity="0.85"/><text x="299.0" y="142.0" fill="#8b8ba7" font-size="10" text-anchor="middle">T8</text><text x="299.0" y="18.6" fill="#10d98a" font-size="11" font-weight="700" text-anchor="middle" font-family="JetBrains Mono, monospace">+52.1</text><rect x="372.4" y="24.0" width="55.7" height="100.0" rx="4" fill="#10d98a" opacity="0.85"/><text x="400.2" y="142.0" fill="#8b8ba7" font-size="10" text-anchor="middle">T9</text><text x="400.2" y="18.0" fill="#10d98a" font-size="11" font-weight="700" text-anchor="middle" font-family="JetBrains Mono, monospace">+52.4</text><rect x="473.6" y="28.6" width="55.7" height="95.4" rx="4" fill="#fbbf24" opacity="0.85"/><text x="501.4" y="142.0" fill="#8b8ba7" font-size="10" text-anchor="middle">Ngưỡng</text><text x="501.4" y="22.6" fill="#fbbf24" font-size="11" font-weight="700" text-anchor="middle" font-family="JetBrains Mono, monospace">+50</text></svg></div>
+        <div class="ed-items">
+      <div class="ed-item">
+        <div class="ed-name">PMI Sản xuất</div>
+        <div class="ed-value pos">52.4 điểm</div>
+        <div class="ed-note">T8 đạt 52.1 ▲ · Đơn đặt hàng mới tăng</div>
+      </div>
+      <div class="ed-item">
+        <div class="ed-name">Chỉ số IIP toàn ngành</div>
+        <div class="ed-value pos">+8.50%</div>
+        <div class="ed-note">YoY T8 +8.10% ▲ · Chế biến chế tạo +9.80%</div>
+      </div>
+      <div class="ed-item">
+        <div class="ed-name">Tổng mức bán lẻ &amp; dịch vụ</div>
+        <div class="ed-value pos">+9.80%</div>
+        <div class="ed-note">YoY T8 +9.50% ▲ · 9 tháng tăng +9.70%</div>
+      </div></div>
+      </div>
+  </section><section class="group-section" id="group2">
+    <div class="group-header">
+      <span class="tag g2">02</span>
+      <h2>Ngoại thương &amp; FDI — Thặng dư thương mại tiếp tục mở rộng</h2>
+      <div class="divider-line"></div>
+      <span style="font-size:12px;color:var(--text-faint)">Nguồn: Tổng cục Hải quan, Bộ KH&amp;ĐT</span>
+    </div>
+    
+    <div class="ed-section">
+        <div class="ed-lead">Kim ngạch xuất khẩu tháng 9 ước đạt <span class="num">34.50 tỷ USD</span>, tăng <span class="num">10.20%</span> YoY, đưa xuất siêu tháng đạt <span class="num">2.30 tỷ USD</span>. Lũy kế 9 tháng, cán cân thương mại ghi nhận thặng dư <span class="num">20.80 tỷ USD</span>. Vốn FDI thực hiện 9 tháng đạt <span class="num">17.30 tỷ USD</span>, tăng <span class="num">8.90%</span> YoY — chạm mốc cao nhất cùng kỳ trong giai đoạn 5 năm qua.</div>
+        <div class="ed-graph"><div class="ed-graph-title">📈 Cán cân thương mại các tháng gần đây (tỷ USD)</div><svg viewBox="0 0 560 150" role="img" aria-label="Biểu đồ so sánh"><line x1="46" y1="124" x2="552" y2="124" stroke="rgba(139,92,246,0.25)" stroke-width="1" stroke-dasharray="4 4"/><rect x="74.5" y="39.2" width="69.6" height="84.8" rx="4" fill="#10d98a" opacity="0.85"/><text x="109.3" y="142.0" fill="#8b8ba7" font-size="10" text-anchor="middle">T6</text><text x="109.3" y="33.2" fill="#10d98a" font-size="11" font-weight="700" text-anchor="middle" font-family="JetBrains Mono, monospace">+1.95</text><rect x="201.0" y="31.8" width="69.6" height="92.2" rx="4" fill="#10d98a" opacity="0.85"/><text x="235.8" y="142.0" fill="#8b8ba7" font-size="10" text-anchor="middle">T7</text><text x="235.8" y="25.8" fill="#10d98a" font-size="11" font-weight="700" text-anchor="middle" font-family="JetBrains Mono, monospace">+2.12</text><rect x="327.5" y="26.2" width="69.6" height="97.8" rx="4" fill="#10d98a" opacity="0.85"/><text x="362.3" y="142.0" fill="#8b8ba7" font-size="10" text-anchor="middle">T8</text><text x="362.3" y="20.2" fill="#10d98a" font-size="11" font-weight="700" text-anchor="middle" font-family="JetBrains Mono, monospace">+2.25</text><rect x="454.0" y="24.0" width="69.6" height="100.0" rx="4" fill="#10d98a" opacity="0.85"/><text x="488.8" y="142.0" fill="#8b8ba7" font-size="10" text-anchor="middle">T9</text><text x="488.8" y="18.0" fill="#10d98a" font-size="11" font-weight="700" text-anchor="middle" font-family="JetBrains Mono, monospace">+2.3</text></svg></div>
+        <div class="ed-items">
+      <div class="ed-item">
+        <div class="ed-name">Kim ngạch xuất khẩu</div>
+        <div class="ed-value pos">34.50 tỷ USD</div>
+        <div class="ed-note">YoY +10.20% ▲ · Điện tử & máy tính đóng góp chính</div>
+      </div>
+      <div class="ed-item">
+        <div class="ed-name">Kim ngạch nhập khẩu</div>
+        <div class="ed-value pos">32.20 tỷ USD</div>
+        <div class="ed-note">YoY +9.80% ▲ · Nguyên phụ liệu sản xuất tăng</div>
+      </div>
+      <div class="ed-item">
+        <div class="ed-name">Cán cân thương mại</div>
+        <div class="ed-value pos">+2.30 tỷ USD</div>
+        <div class="ed-note">T8 +2.25 tỷ USD ▲ · Lũy kế 9T +20.80 tỷ USD</div>
+      </div>
+      <div class="ed-item">
+        <div class="ed-name">FDI thực hiện</div>
+        <div class="ed-value pos">17.30 tỷ USD</div>
+        <div class="ed-note">YoY +8.90% ▲ · Đạt đỉnh 5 năm cùng kỳ</div>
+      </div></div>
+      </div>
+  </section><section class="group-section" id="group3">
+    <div class="group-header">
+      <span class="tag g3">03</span>
+      <h2>Lạm phát &amp; Giá cả — Kiểm soát tốt dưới ngưỡng mục tiêu</h2>
+      <div class="divider-line"></div>
+      <span style="font-size:12px;color:var(--text-faint)">Nguồn: TCTK</span>
+    </div>
+    
+    <div class="ed-section">
+        <div class="ed-lead">CPI YoY tháng 9 ghi nhận ở mức <span class="num">3.82%</span>, giảm từ mức <span class="num">4.05%</span> của tháng 8 và nằm an toàn dưới mục tiêu <span class="num">4.50%</span>. CPI MoM tăng nhẹ <span class="num">0.22%</span> chủ yếu do nhóm hàng giáo dục đầu năm học mới. Chỉ số giá vàng tăng <span class="num">22.40%</span> YoY do biến động thế giới, trong khi chỉ số giá USD duy trì mức tăng vừa phải <span class="num">2.15%</span> YoY.</div>
+        <div class="ed-graph"><div class="ed-graph-title">📈 CPI YoY so với Mục tiêu Quốc hội 4.50%</div><svg viewBox="0 0 560 150" role="img" aria-label="Biểu đồ so sánh"><line x1="46" y1="124" x2="552" y2="124" stroke="rgba(139,92,246,0.25)" stroke-width="1" stroke-dasharray="4 4"/><rect x="68.8" y="28.0" width="55.7" height="96.0" rx="4" fill="#10d98a" opacity="0.85"/><text x="96.6" y="142.0" fill="#8b8ba7" font-size="10" text-anchor="middle">T6</text><text x="96.6" y="22.0" fill="#10d98a" font-size="11" font-weight="700" text-anchor="middle" font-family="JetBrains Mono, monospace">+4.32</text><rect x="170.0" y="31.8" width="55.7" height="92.2" rx="4" fill="#10d98a" opacity="0.85"/><text x="197.8" y="142.0" fill="#8b8ba7" font-size="10" text-anchor="middle">T7</text><text x="197.8" y="25.8" fill="#10d98a" font-size="11" font-weight="700" text-anchor="middle" font-family="JetBrains Mono, monospace">+4.15</text><rect x="271.2" y="34.0" width="55.7" height="90.0" rx="4" fill="#10d98a" opacity="0.85"/><text x="299.0" y="142.0" fill="#8b8ba7" font-size="10" text-anchor="middle">T8</text><text x="299.0" y="28.0" fill="#10d98a" font-size="11" font-weight="700" text-anchor="middle" font-family="JetBrains Mono, monospace">+4.05</text><rect x="372.4" y="39.1" width="55.7" height="84.9" rx="4" fill="#10d98a" opacity="0.85"/><text x="400.2" y="142.0" fill="#8b8ba7" font-size="10" text-anchor="middle">T9</text><text x="400.2" y="33.1" fill="#10d98a" font-size="11" font-weight="700" text-anchor="middle" font-family="JetBrains Mono, monospace">+3.82</text><rect x="473.6" y="24.0" width="55.7" height="100.0" rx="4" fill="#fbbf24" opacity="0.85"/><text x="501.4" y="142.0" fill="#8b8ba7" font-size="10" text-anchor="middle">Mục tiêu</text><text x="501.4" y="18.0" fill="#fbbf24" font-size="11" font-weight="700" text-anchor="middle" font-family="JetBrains Mono, monospace">+4.5</text></svg></div>
+        <div class="ed-items">
+      <div class="ed-item">
+        <div class="ed-name">CPI YoY</div>
+        <div class="ed-value pos">3.82%</div>
+        <div class="ed-note">T8 đạt 4.05% ▼ · Bình quân 9T +3.88%</div>
+      </div>
+      <div class="ed-item">
+        <div class="ed-name">CPI Lạm phát cơ bản</div>
+        <div class="ed-value pos">2.68%</div>
+        <div class="ed-note">YoY T8 +2.71% ▼ · Kiểm soát ổn định</div>
+      </div>
+      <div class="ed-item">
+        <div class="ed-name">Chỉ số giá vàng</div>
+        <div class="ed-value neg">+22.40%</div>
+        <div class="ed-note">MoM +0.85% ▲ · Biến động theo thế giới</div>
+      </div>
+      <div class="ed-item">
+        <div class="ed-name">Chỉ số giá USD</div>
+        <div class="ed-value neu">+2.15%</div>
+        <div class="ed-note">MoM -0.15% ▼ · Áp lực tỷ giá hạ nhiệt</div>
+      </div></div>
+      </div>
+  </section><section class="group-section" id="group4">
+    <div class="group-header">
+      <span class="tag g4">04</span>
+      <h2>Tiền tệ &amp; Thị trường — Tín dụng tăng tốc, lãi suất ổn định</h2>
+      <div class="divider-line"></div>
+      <span style="font-size:12px;color:var(--text-faint)">Nguồn: NHNN, VBMA</span>
+    </div>
+    
+    <div class="ed-section">
+        <div class="ed-lead">Tăng trưởng tín dụng toàn hệ thống tính đến cuối tháng 9 đạt <span class="num">8.50%</span> YTD, cải thiện đáng kể so với mức <span class="num">6.25%</span> thời điểm giữa năm. Lãi suất liên ngân hàng kỳ hạn qua đêm duy trì quanh mức <span class="num">4.12%</span>. Tỷ giá USD/VND niêm yết tại Ngân hàng Nhà nước hạ nhiệt về mốc <span class="num">25,120 VND/USD</span> nhờ chính sách nới lỏng của FED.</div>
+        <div class="ed-graph"><div class="ed-graph-title">📈 Tăng trưởng tín dụng YTD năm 2026 (%)</div><svg viewBox="0 0 560 150" role="img" aria-label="Biểu đồ so sánh"><line x1="46" y1="124" x2="552" y2="124" stroke="rgba(139,92,246,0.25)" stroke-width="1" stroke-dasharray="4 4"/><rect x="68.8" y="82.3" width="55.7" height="41.7" rx="4" fill="#10d98a" opacity="0.85"/><text x="96.6" y="142.0" fill="#8b8ba7" font-size="10" text-anchor="middle">T6</text><text x="96.6" y="76.3" fill="#10d98a" font-size="11" font-weight="700" text-anchor="middle" font-family="JetBrains Mono, monospace">+6.25</text><rect x="170.0" y="78.7" width="55.7" height="45.3" rx="4" fill="#10d98a" opacity="0.85"/><text x="197.8" y="142.0" fill="#8b8ba7" font-size="10" text-anchor="middle">T7</text><text x="197.8" y="72.7" fill="#10d98a" font-size="11" font-weight="700" text-anchor="middle" font-family="JetBrains Mono, monospace">+6.8</text><rect x="271.2" y="73.7" width="55.7" height="50.3" rx="4" fill="#10d98a" opacity="0.85"/><text x="299.0" y="142.0" fill="#8b8ba7" font-size="10" text-anchor="middle">T8</text><text x="299.0" y="67.7" fill="#10d98a" font-size="11" font-weight="700" text-anchor="middle" font-family="JetBrains Mono, monospace">+7.55</text><rect x="372.4" y="67.3" width="55.7" height="56.7" rx="4" fill="#10d98a" opacity="0.85"/><text x="400.2" y="142.0" fill="#8b8ba7" font-size="10" text-anchor="middle">T9</text><text x="400.2" y="61.3" fill="#10d98a" font-size="11" font-weight="700" text-anchor="middle" font-family="JetBrains Mono, monospace">+8.5</text><rect x="473.6" y="24.0" width="55.7" height="100.0" rx="4" fill="#fbbf24" opacity="0.85"/><text x="501.4" y="142.0" fill="#8b8ba7" font-size="10" text-anchor="middle">Mục tiêu</text><text x="501.4" y="18.0" fill="#fbbf24" font-size="11" font-weight="700" text-anchor="middle" font-family="JetBrains Mono, monospace">+15</text></svg></div>
+        <div class="ed-items">
+      <div class="ed-item">
+        <div class="ed-name">Tăng trưởng tín dụng YTD</div>
+        <div class="ed-value pos">+8.50%</div>
+        <div class="ed-note">T8 đạt +7.55% ▲ · Định hướng cả năm 15%</div>
+      </div>
+      <div class="ed-item">
+        <div class="ed-name">Lãi suất qua đêm LNH</div>
+        <div class="ed-value neu">4.12%</div>
+        <div class="ed-note">T8 đạt 4.25% ▼ · Thanh khoản hệ thống dồi dào</div>
+      </div>
+      <div class="ed-item">
+        <div class="ed-name">Tỷ giá trung tâm USD/VND</div>
+        <div class="ed-value pos">24,210</div>
+        <div class="ed-note">Giảm -45 VND so cuối T8 ▼ · DXY hạ nhiệt</div>
+      </div></div>
+      </div>
+  </section>
+  <section class="group-section" id="summary">
+    <div class="group-header">
+      <span class="tag g1">05</span>
+      <h2>Tổng hợp — Rủi ro · Động lực · Điểm chính</h2>
+      <div class="divider-line"></div>
+    </div>
+    <div class="rc-grid">
+      <div class="rc-box risks"><div class="rc-title">⚠️ RỦI RO</div><div class="rc-item"><span class="rc-level medium">high</span></div><div class="rc-item"><span class="rc-level medium">medium</span></div><div class="rc-item"><span class="rc-level medium">medium</span></div></div>
+      <div class="rc-box catalysts"><div class="rc-title">🚀 ĐỘNG LỰC</div><div class="rc-item"><span class="rc-level medium"></span></div><div class="rc-item"><span class="rc-level medium"></span></div><div class="rc-item"><span class="rc-level medium"></span></div></div>
+    </div>
+    <div class="section-title" style="margin-top:36px"><h2>⭐ Điểm chính</h2><div class="divider-line"></div></div>
+    <div class="takeaways"><ol><li>⭐ Sản xuất và ngoại thương tiếp tục là động lực tăng trưởng chính với IIP +8.50%, PMI 52.4 điểm và xuất siêu 9 tháng đạt 20.80 tỷ USD.</li><li>Lạm phát YoY hạ nhiệt xuống 3.82%, tạo dư địa vững chắc cho Ngân hàng Nhà nước duy trì chính sách tiền tệ hỗ trợ tăng trưởng.</li><li>Tín dụng đạt 8.50% YTD cùng sự ổn định của tỷ giá USD/VND tạo điều kiện thuận lợi cho thanh khoản và dòng vốn doanh nghiệp cuối năm.</li></ol></div>
+  </section>
+  <div class="disclaimer">⚠️ <strong>Miễn trừ trách nhiệm:</strong> Báo cáo vĩ mô tham khảo cá nhân. Số liệu từ 5 nguồn chính thức. Áp nguyên tắc Nhất quán thời gian (chốt dữ liệu 2026-09-30). <strong>Không phải lời khuyên đầu tư</strong>.</div>
+  <footer>
+    <div>📊 Báo cáo vĩ mô VN · Tháng 9/2026 · 2026-09-30</div>
+    <div style="margin-top:6px">Nguồn: PMI · NSO · Customs · VBMA · VNBA</div>
+  </footer>
+</div>
+<div class="modal" id="chartModal">
+  <div class="modal-content">
+    <div class="modal-head">
+      <h3 id="modalTitle">Dữ liệu lịch sử</h3>
+      <button class="modal-close" onclick="closeModal()">×</button>
+    </div>
+    <div class="modal-chart-wrap"><canvas id="modalChart"></canvas></div>
+  </div>
+</div>
+<script>
+// Dữ liệu lịch sử — TỰ TÍCH LŨY qua các tháng.
+// Template DEMO bắt đầu TRỐNG đúng spec (xem SKILL.md "History rules").
+// Khi skill chạy thật: data tự append vào history.json từ cache kỳ trước.
+// → Mọi nút [📊] sẽ ẩn cho đến khi history đủ 6+ điểm (feature ngủ chờ data).
+const history={"series":[]};
+const INDICATOR_LABELS={
+  cpi_yoy_pct:'CPI YoY (%)',pmi:'PMI Sản xuất',iip_yoy_pct:'IIP YoY (%)',
+  trade_balance:'Cán cân thương mại (tỷ USD)',exports:'Xuất khẩu (tỷ USD)',
+  imports:'Nhập khẩu (tỷ USD)',fdi_disbursed:'FDI thực hiện (tỷ USD)',
+  interbank_on:'Lãi suất LNH qua đêm (%)',fx_central:'Tỷ giá trung tâm (VND/USD)',
+  vn_index:'VN-Index',gold:'Vàng thế giới (USD/oz)',oil_brent:'Dầu Brent (USD/thùng)',
+  us_10y:'Lợi suất TP Mỹ 10 năm (%)'
+};
+
+// ⚠️ OFFLINE GUARD: nếu Chart.js CDN không load được (mất mạng) → KHÔNG chạy cấu hình
+// top-level, nếu không toàn bộ script chết (ReferenceError) → nav/sparkline/gauge hỏng theo.
+// Guard PHẢI đặt trước mọi tham chiếu Chart ở cấp cao nhất.
+const HAS_CHART_LIB = typeof Chart !== 'undefined';
+if (HAS_CHART_LIB) {
+  Chart.defaults.color='#8b8ba7';
+  Chart.defaults.font.family="'Inter',sans-serif";
+  Chart.defaults.borderColor='rgba(139,92,246,0.08)';
+}
+
+let modalChart=null;
+function openModal(key){
+  const series=history.series[key]||[];
+  const label=INDICATOR_LABELS[key]||key;
+  document.getElementById('modalTitle').textContent=label+' — Dữ liệu lịch sử';
+  document.getElementById('chartModal').classList.add('active');
+  if(modalChart){modalChart.destroy();modalChart=null;}
+  // Offline guard: nếu Chart.js CDN không load được → thông báo nhẹ, không crash
+  if(!HAS_CHART_LIB){
+    document.getElementById('modalChart').style.display='none';
+    const note=document.createElement('div');
+    note.style.cssText='color:var(--text-dim);font-size:13px;padding:20px;text-align:center';
+    note.textContent='Không tải được thư viện biểu đồ (cần internet). Mở lại khi có mạng.';
+    document.getElementById('modalChart').parentNode.appendChild(note);
+    return;
+  }
+  document.getElementById('modalChart').style.display='block';
+  const ctx=document.getElementById('modalChart').getContext('2d');
+  const grad=ctx.createLinearGradient(0,0,0,280);
+  grad.addColorStop(0,'rgba(236,72,153,0.4)');
+  grad.addColorStop(1,'rgba(236,72,153,0)');
+  // Mốc 50 cho PMI — ranh giới mở rộng/thu hẹp.
+  // Plugin annotation v3 KHÔNG set Chart.annotation — kiểm tra qua registry thay thế.
+  const annotations={};
+  const annRegistered = HAS_CHART_LIB &&
+    typeof Chart.registry !== 'undefined' &&
+    Chart.registry.plugins && Chart.registry.plugins.items &&
+    'annotation' in Chart.registry.plugins.items;
+  if(key==='pmi'&&annRegistered){
+    annotations.threshold={type:'line',yMin:50,yMax:50,
+      borderColor:'#fbbf24',borderWidth:2,borderDash:[6,4],
+      label:{content:'50 = ranh giới',display:true,position:'start'}};
+  }
+  modalChart=new Chart(ctx,{
+    type:'line',
+    data:{labels:series.map(s=>s.month),datasets:[{
+      label:label,data:series.map(s=>s.value),
+      borderColor:'#ec4899',backgroundColor:grad,borderWidth:3,tension:0.4,fill:true,
+      pointRadius:6,pointBackgroundColor:'#ec4899',pointBorderColor:'#fff',pointBorderWidth:2
+    }]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},annotation:annotations},
+      scales:{x:{grid:{color:'rgba(139,92,246,0.06)'}},
+              y:{grid:{color:'rgba(139,92,246,0.06)'}}}}
+  });
+}
+function closeModal(){
+  document.getElementById('chartModal').classList.remove('active');
+  if(modalChart){modalChart.destroy();modalChart=null;}
+}
+
+// ═══ VISUAL V2: mũi tên tăng/giảm tự động ═══
+// Chèn ▲ (xanh) / ▼ (đỏ) vào mọi số có dấu + / - trong meta card
+function decorateArrows(){
+  document.querySelectorAll('.dc-meta strong, .dc-target-row, .kpi-delta, .panel-trend strong, .rc-item').forEach(el=>{
+    const t=el.textContent||'';
+    if(el.querySelector('.arrow-up,.arrow-down')) return;
+    if(/^[+]\s?/.test(t.trim())||/^[+]/.test(t.trim())){
+      el.insertAdjacentHTML('beforeend','<span class="arrow-up">▲</span>');
+    }else if(/^[-]\s?/.test(t.trim())||/^[-]/.test(t.trim())){
+      el.insertAdjacentHTML('beforeend','<span class="arrow-down">▼</span>');
+    }
+  });
+}
+
+// ═══ VISUAL V2: sparkline trong card (SVG thuần — không phụ thuộc Chart.js) ═══
+// Hiện từ tháng 2+ (history ≥2 điểm) — không chờ 6 tháng như nút [📊]
+const SPARK_MIN_POINTS=2;
+function drawSparkline(svgEl, series, unit){
+  const w=300,h=44,pad=6;
+  const ns='http://www.w3.org/2000/svg';
+  svgEl.setAttribute('viewBox',`0 0 ${w} ${h}`);
+  svgEl.setAttribute('preserveAspectRatio','none');
+  const vals=series.map(s=>s.value);
+  const min=Math.min(...vals),max=Math.max(...vals);
+  const span=(max-min)||1;
+  const px=v=>pad+(v-min)/span*(w-2*pad);
+  const py=v=>h-pad-(v-min)/span*(h-2*pad);
+  const pts=vals.map((v,i)=>`${px(v)},${py(v)}`).join(' ');
+  const up=vals[vals.length-1]>=vals[0];
+  const color=up?'#10d98a':'#ff4d6d';
+  // vùng gradient dưới đường
+  const areaPts=`${w-pad},${h-pad} ${pts} ${pad},${h-pad}`;
+  const g=document.createElementNS(ns,'polygon');
+  g.setAttribute('points',areaPts);
+  g.setAttribute('fill',up?'rgba(16,217,138,0.18)':'rgba(255,77,109,0.18)');
+  const l=document.createElementNS(ns,'polyline');
+  l.setAttribute('points',pts);
+  l.setAttribute('fill','none');
+  l.setAttribute('stroke',color);
+  l.setAttribute('stroke-width','2.2');
+  l.setAttribute('stroke-linejoin','round');
+  l.setAttribute('stroke-linecap','round');
+  // điểm cuối
+  const c=document.createElementNS(ns,'circle');
+  c.setAttribute('cx',px(vals[vals.length-1]));
+  c.setAttribute('cy',py(vals[vals.length-1]));
+  c.setAttribute('r','3.4');
+  c.setAttribute('fill',color);
+  svgEl.appendChild(g);svgEl.appendChild(l);svgEl.appendChild(c);
+}
+function injectSparklines(){
+  // Với mỗi nút chart (chỉ số Cấp A), chèn sparkline phía trước
+  document.querySelectorAll('.dc-chart-btn').forEach(btn=>{
+    const key=btn.dataset.indicator;
+    const series=history.series[key]||[];
+    if(series.length<SPARK_MIN_POINTS) return; // chưa đủ 2 điểm → không vẽ
+    if(btn.previousElementSibling&&btn.previousElementSibling.classList&&btn.previousElementSibling.classList.contains('dc-spark-wrap')) return;
+    const ns='http://www.w3.org/2000/svg';
+    const wrap=document.createElement('div');
+    wrap.className='dc-spark-wrap';
+    const svg=document.createElementNS(ns,'svg');
+    svg.setAttribute('class','dc-spark');
+    svg.setAttribute('data-indicator',key);
+    const label=document.createElement('div');
+    label.className='dc-spark-label';
+    const last=series[series.length-1];
+    label.innerHTML=`<span>Xu hướng (${series.length} kỳ)</span><span class="spark-newest">${key in INDICATOR_LABELS?INDICATOR_LABELS[key].split('(')[0].trim():key}: ${last.value}</span>`;
+    wrap.appendChild(svg);wrap.appendChild(label);
+    btn.parentNode.insertBefore(wrap,btn);
+    drawSparkline(svg,series);
+  });
+}
+
+// ═══ VISUAL V2: Gauge PMI — nửa vòng tròn mốc 50 (SVG thuần) ═══
+function drawGauge(id,value,min=35,max=65){
+  const svg=document.getElementById(id);
+  if(!svg) return;
+  const ns='http://www.w3.org/2000/svg';
+  const w=240,h=132,cx=120,cy=118,r=100;
+  svg.setAttribute('viewBox',`0 0 ${w} ${h}`);
+  svg.innerHTML='';
+  const aOf=v=>Math.PI*(1-(v-min)/(max-min)); // 180° → 0°
+  const pt=(v,rad)=>[cx+rad*Math.cos(aOf(v)),cy-rad*Math.sin(aOf(v))];
+  const arcPath=(v0,v1,rad)=>{
+    const [x0,y0]=pt(v0,rad),[x1,y1]=pt(v1,rad);
+    // Cung luôn vẽ theo chiều kim đồng hồ (sweep=1) từ TRÁI qua ĐỈNH sang PHẢI,
+    // quét tối đa 180° (min→max) nên large-arc LUÔN = 0.
+    // ⚠️ Đừng bật large-arc=1 — kim sẽ vòng QUA ĐÁY đồng hồ (bug đã gặp).
+    return `M ${x0} ${y0} A ${rad} ${rad} 0 0 1 ${x1} ${y1}`;
+  };
+  const mkArc=(d,color,width)=>{
+    const el=document.createElementNS(ns,'path');
+    el.setAttribute('d',d);el.setAttribute('fill','none');
+    el.setAttribute('stroke',color);el.setAttribute('stroke-width',width);
+    el.setAttribute('stroke-linecap','round');
+    return el;
+  };
+  // nền + vùng mở rộng (vẽ tĩnh)
+  svg.appendChild(mkArc(arcPath(min,max,100),'rgba(139,92,246,0.14)',16));
+  svg.appendChild(mkArc(arcPath(50,max,100),'rgba(16,217,138,0.16)',16));
+  // kim — quay TỪ TỪ khi load (0.6s, ease-out); tôn trọng prefers-reduced-motion
+  const cl=value>=50?'#10d98a':'#ff4d6d';
+  const kim=mkArc(arcPath(min,min,100),cl,16);
+  svg.appendChild(kim);
+  const vClamped=Math.min(Math.max(value,min),max);
+  const reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const dur=reduce?0:600,t0=performance.now();
+  (function anim(now){
+    const p=reduce?1:Math.min(1,(now-t0)/dur);
+    const eased=1-Math.pow(1-p,3);
+    kim.setAttribute('d',arcPath(min,min+(vClamped-min)*eased,100));
+    if(p<1) requestAnimationFrame(anim);
+  })(t0);
+  // mốc 50
+  const [tx,ty]=pt(50,100);
+  const tk=document.createElementNS(ns,'line');
+  tk.setAttribute('x1',tx);tk.setAttribute('y1',ty-14);
+  tk.setAttribute('x2',tx);tk.setAttribute('y2',ty+14);
+  tk.setAttribute('stroke','#fbbf24');tk.setAttribute('stroke-width',2.5);
+  svg.appendChild(tk);
+  // KHÔNG thêm text node nào vào SVG — tránh chuỗi số dồn hàng ("356550") gây rối mắt.
+  // Thông tin thang đo đã có: số lớn ở giữa (div .gauge-value) + chú thích mốc 50 (div .gauge-threshold).
+}
+function initGauge(){
+  const wrap=document.getElementById('pmiGaugeWrap');
+  if(!wrap) return;
+  const pmiSeries=history.series['pmi']||[];
+  // Không có data thật → ẩn gauge (feature ngủ chờ data, KHÔNG vẽ số mẫu)
+  if(!pmiSeries.length){wrap.style.display='none';return;}
+  const v=pmiSeries[pmiSeries.length-1].value;
+  drawGauge('pmiGauge',v);
+  const th=document.createElement('div');
+  th.className='gauge-threshold';th.textContent='▼ 50 = ranh giới mở rộng/thu hẹp';
+  wrap.appendChild(th);
+}
+
+// ẨN nút đồ thị nếu lịch sử < 6 điểm
+const MIN_POINTS_FOR_CHART=6;
+document.querySelectorAll('.dc-chart-btn').forEach(btn=>{
+  const key=btn.dataset.indicator;
+  const series=history.series[key]||[];
+  if(series.length<MIN_POINTS_FOR_CHART){
+    btn.style.display='none';
+  }else{
+    btn.addEventListener('click',()=>openModal(key));
+  }
+});
+document.getElementById('chartModal').addEventListener('click',e=>{
+  if(e.target.id==='chartModal') closeModal();
+});
+
+// ═══ VISUAL V3: hiệu ứng chức năng — số đếm + thanh tiến độ ═══
+// Chỉ animation MỘT LẦN khi load (0.5-0.6s, ease-out) — giúp mắt định vị số chính.
+// Tôn trọng prefers-reduced-motion. KHÔNG animation lặp vô hạn (nhiễu, không in được).
+function animateCountUp(){
+  if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  document.querySelectorAll('.dc-value, .kpi-value').forEach(el=>{
+    const text=el.textContent||'';
+    const m=text.match(/^([-+]?[\d][\d.,]*)/);
+    if(!m) return;
+    const target=parseFloat(m[1].replace(/,/g,''));
+    if(!isFinite(target)) return;
+    const suffix=text.slice(m[0].length);
+    const dur=500,t0=performance.now();
+    const fmt=n=>m[1].includes(',')
+      ? n.toLocaleString('en-US',{maximumFractionDigits:1})
+      : String(+n.toFixed(2));
+    (function tick(now){
+      const p=Math.min(1,(now-t0)/dur);
+      const eased=1-Math.pow(1-p,3);
+      el.textContent=fmt(target*eased)+suffix;
+      if(p<1) requestAnimationFrame(tick);
+    })(t0);
+  });
+}
+function animateProgress(){
+  if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  document.querySelectorAll('.dc-progress-fill').forEach(f=>{
+    const targetPct=parseFloat(f.style.width||'0')||0;
+    if(!targetPct) return;
+    f.style.width='0%';
+    const dur=600,t0=performance.now();
+    (function tick(now){
+      const p=Math.min(1,(now-t0)/dur);
+      const eased=1-Math.pow(1-p,3);
+      f.style.width=(targetPct*eased).toFixed(1)+'%';
+      if(p<1) requestAnimationFrame(tick);
+    })(t0);
+  });
+}
+
+// ═══ VISUAL V2: khởi động — mũi tên + sparkline + gauge ═══
+decorateArrows();
+injectSparklines();
+initGauge();
+animateCountUp();
+animateProgress();
+
+// NAV tabs
+document.querySelectorAll('.nav-tab').forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.group-section').forEach(s=>s.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById(tab.dataset.target).classList.add('active');
+    window.scrollTo({top:document.querySelector('.nav-tabs').offsetTop-20,behavior:'smooth'});
+  });
+});
+</script>
+</body>
+</html>
