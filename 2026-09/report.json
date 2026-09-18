@@ -5,39 +5,39 @@
     "year": 2026,
     "data_cutoff": "2026-09-30"
   },
-  "verdict": "TÍCH CỰC — TĂNG TRƯỞNG DUY TRÌ BỀN VỮNG",
+  "verdict": "TÍCH CỰC — DUY TRÌ ĐÀ TĂNG TRƯỞNG",
   "verdict_class": "green",
-  "verdict_reason": "Sản xuất công nghiệp và xuất khẩu duy trì đà bứt phá mạnh mẽ; PMI đạt 53.8 điểm ghi nhận tháng mở rộng thứ 6 liên tiếp; CPI YoY hạ nhiệt về 3.82% giữ vững dư địa chính sách tiền tệ.",
+  "verdict_reason": "PMI sản xuất duy trì vùng mở rộng 52.5 điểm, CPI YoY hạ nhiệt về 3.85% nằm an toàn dưới mục tiêu 4.5%, cán cân thương mại xuất siêu 2.3 tỷ USD cùng vốn FDI giải ngân tăng trưởng ổn định.",
   "hero_kpis": [
     {
       "label": "CPI YoY",
-      "value": "3.82",
+      "value": "3.85",
       "unit": "%",
-      "delta": "Thấp hơn mục tiêu 4.5%",
+      "delta": "Dưới mục tiêu 4.5%",
       "signal": "pos",
       "flag": "green"
     },
     {
       "label": "PMI Sản xuất",
-      "value": "53.8",
+      "value": "52.5",
       "unit": "điểm",
-      "delta": "Mở rộng 6 tháng liên tiếp",
+      "delta": "Mở rộng 4 tháng liên tiếp",
       "signal": "pos",
       "flag": "green"
     },
     {
-      "label": "Xuất khẩu T9",
-      "value": "38.5",
+      "label": "Xuất siêu T9",
+      "value": "2.30",
       "unit": "tỷ USD",
-      "delta": "YoY +14.2%",
+      "delta": "Lũy kế 9T xuất siêu 20.8 tỷ USD",
       "signal": "pos",
       "flag": "green"
     },
     {
-      "label": "Cán cân TM 9T",
-      "value": "+21.5",
-      "unit": "tỷ USD",
-      "delta": "Thặng dư bền vững",
+      "label": "IIP Toàn ngành",
+      "value": "8.20",
+      "unit": "%",
+      "delta": "Công nghiệp chế tạo tăng trưởng tốt",
       "signal": "pos",
       "flag": "green"
     }
@@ -46,147 +46,98 @@
     {
       "id": "group1",
       "tab": "Tăng trưởng & Sản xuất",
-      "title": "Sản xuất công nghiệp & Chỉ số PMI bứt phá",
+      "title": "Sản xuất công nghiệp & Thương mại duy trì đà hồi phục vững chắc",
       "tag": "g1",
-      "source_note": "Nguồn: TCTK (NSO) & S&P Global",
-      "lead": "Chỉ số PMI sản xuất tháng 9/2026 đạt <span class=\"num\">53.8 điểm</span>, đánh dấu <strong>tháng mở rộng thứ 6 liên tiếp</strong> nhờ lượng đơn đặt hàng mới tăng mạnh. Cùng lúc, chỉ số sản xuất toàn ngành công nghiệp (IIP) đạt mức tăng <span class=\"num\">+9.2% YoY</span>, trong đó ngành chế biến chế tạo tiếp tục đóng vai trò động lực cốt lõi với mức tăng <span class=\"num\">+10.1% YoY</span>.",
+      "source_note": "Nguồn: TCTK, S&P Global, Tổng cục Hải quan",
+      "lead": "Chỉ số PMI sản xuất tháng 9/2026 đạt <span class=\"num\">52.5</span> điểm, đánh dấu tháng thứ 4 liên tiếp nằm trong vùng mở rộng. Cùng với đó, chỉ số sản xuất toàn ngành công nghiệp (IIP) tăng <span class=\"num\">8.20%</span> YoY nhờ đóng góp tích cực từ nhóm chế biến chế tạo <strong>tăng 9.5%</strong>.",
       "graph": {
         "type": "bar",
-        "title": "PMI & IIP Chế biến chế tạo T7 - T9/2026",
+        "title": "PMI Sản xuất qua các tháng (Mốc ranh giới 50 điểm)",
         "items": [
           {
-            "label": "PMI T7",
+            "label": "T6",
+            "value": 51.2,
+            "color": "pos"
+          },
+          {
+            "label": "T7",
             "value": 52.9,
             "color": "pos"
           },
           {
-            "label": "PMI T8",
-            "value": 53.2,
+            "label": "T8",
+            "value": 52.1,
             "color": "pos"
           },
           {
-            "label": "PMI T9",
-            "value": 53.8,
+            "label": "T9",
+            "value": 52.5,
             "color": "pos"
           },
           {
-            "label": "IIP CBCT T9",
-            "value": 10.1,
-            "color": "pos"
-          }
-        ]
-      },
-      "data_items": [
-        {
-          "name": "PMI Sản xuất",
-          "value": "53.8 điểm",
-          "signal": "pos",
-          "note": "T8 đạt 53.2 điểm ▲ · đơn hàng mới tăng mạnh"
-        },
-        {
-          "name": "IIP Toàn ngành",
-          "value": "+9.2% YoY",
-          "signal": "pos",
-          "note": "9T bình quân +8.6% YoY ▲ · CBCT +10.1%"
-        },
-        {
-          "name": "Bán lẻ Hàng hóa & DV",
-          "value": "+9.8% YoY",
-          "signal": "pos",
-          "note": "MoM +0.8% ▲ · 9T tăng +9.5% YoY"
-        },
-        {
-          "name": "Vận tải Hàng hóa",
-          "value": "+11.4% YoY",
-          "signal": "pos",
-          "note": "Luân chuyển +12.8% YoY · thương mại sôi động"
-        }
-      ]
-    },
-    {
-      "id": "group2",
-      "tab": "Ngoại thương & FDI",
-      "title": "Xuất nhập khẩu & Thu hút vốn FDI vững chắc",
-      "tag": "g2",
-      "source_note": "Nguồn: Tổng cục Hải quan & TCTK",
-      "lead": "Kim ngạch xuất khẩu tháng 9 đạt <span class=\"num\">38.5 tỷ USD</span> (<span class=\"num\">+14.2% YoY</span>), đưa thặng dư thương mại tháng 9 lên mức <span class=\"num\">3.3 tỷ USD</span> và lũy kế 9 tháng đạt <span class=\"num\">21.5 tỷ USD</span>. Dòng vốn FDI thực hiện 9 tháng ghi nhận <span class=\"num\">17.3 tỷ USD</span> (<span class=\"num\">+8.9% YoY</span>), khẳng định vị thế điểm đến đầu tư ổn định của Việt Nam.",
-      "graph": {
-        "type": "bar",
-        "title": "Cán cân thương mại T9 và Lũy kế 9T (tỷ USD)",
-        "items": [
-          {
-            "label": "XK T9",
-            "value": 38.5,
-            "color": "pos"
-          },
-          {
-            "label": "NK T9",
-            "value": 35.2,
-            "color": "pos"
-          },
-          {
-            "label": "Xuất siêu T9",
-            "value": 3.3,
-            "color": "pos"
-          },
-          {
-            "label": "Xuất siêu 9T",
-            "value": 21.5,
+            "label": "Ranh giới",
+            "value": 50,
             "color": "target"
           }
         ]
       },
       "data_items": [
         {
-          "name": "Kim ngạch Xuất khẩu",
-          "value": "38.5 tỷ USD",
+          "name": "Chỉ số PMI",
+          "value": "52.5 điểm",
           "signal": "pos",
-          "note": "YoY +14.2% ▲ · Điện tử & May mặc chủ đạo"
+          "note": "Tăng +0.4 điểm so với T8 · Mở rộng tháng thứ 4"
+        },
+        {
+          "name": "IIP Toàn ngành",
+          "value": "+8.20%",
+          "signal": "pos",
+          "note": "MoM +1.15% ▲ · 9T bình quân tăng +8.50%"
+        },
+        {
+          "name": "Kim ngạch Xuất khẩu",
+          "value": "34.8 tỷ USD",
+          "signal": "pos",
+          "note": "YoY +10.20% ▲ · Điện tử tăng +14.50%"
         },
         {
           "name": "Kim ngạch Nhập khẩu",
-          "value": "35.2 tỷ USD",
+          "value": "32.5 tỷ USD",
           "signal": "pos",
-          "note": "YoY +12.8% ▲ · Nguyên phụ liệu sản xuất"
+          "note": "YoY +9.80% ▲ · Nguyên phụ liệu chiếm 88%"
         },
         {
-          "name": "Cán cân Thương mại",
-          "value": "+3.3 tỷ USD",
+          "name": "Cán cân thương mại",
+          "value": "+2.30 tỷ USD",
           "signal": "pos",
-          "note": "Lũy kế 9T xuất siêu +21.5 tỷ USD ▲"
-        },
-        {
-          "name": "FDI Thực hiện 9T",
-          "value": "17.3 tỷ USD",
-          "signal": "pos",
-          "note": "YoY +8.9% ▲ · Đạt kỷ lục 5 năm qua"
+          "note": "Tháng thứ 9 xuất siêu · Lũy kế +20.8 tỷ USD"
         }
       ]
     },
     {
-      "id": "group3",
-      "tab": "Giá cả & Lạm phát",
-      "title": "CPI duy trì quỹ đạo kiểm soát dưới 4%",
-      "tag": "g3",
+      "id": "group2",
+      "tab": "Lạm phát & Tiêu dùng",
+      "title": "Lạm phát kiểm soát tốt dưới mục tiêu 4.5%",
+      "tag": "g2",
       "source_note": "Nguồn: TCTK",
-      "lead": "Chỉ số CPI YoY tháng 9/2026 tăng <span class=\"num\">3.82% YoY</span>, giảm nhẹ so với mức <span class=\"num\">4.02%</span> của tháng 8, duy trì khoảng cách an toàn so với trần mục tiêu <span class=\"num\">4.5%</span>. Lạm phát cơ bản tháng 9 ghi nhận mức tăng <span class=\"num\">2.71% YoY</span>, phản ảnh áp lực giá cả tiêu dùng tiếp tục trong tầm kiểm soát.",
+      "lead": "CPI YoY tháng 9/2026 ghi nhận ở mức <span class=\"num\">3.85%</span>, giảm tiếp <span class=\"num\">0.15%</span> so với tháng 8 và duy trì khoảng cách an toàn so với trần <strong>4.50%</strong>. Tổng mức bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng tăng <span class=\"num\">9.10%</span> YoY.",
       "graph": {
         "type": "bar",
-        "title": "Diễn biến CPI YoY T7 - T9/2026 vs Mục tiêu",
+        "title": "CPI YoY T9/2026 so với mục tiêu 4.5%",
         "items": [
           {
-            "label": "CPI T7",
+            "label": "T7",
             "value": 4.45,
             "color": "pos"
           },
           {
-            "label": "CPI T8",
-            "value": 4.02,
+            "label": "T8",
+            "value": 4,
             "color": "pos"
           },
           {
-            "label": "CPI T9",
-            "value": 3.82,
+            "label": "T9",
+            "value": 3.85,
             "color": "pos"
           },
           {
@@ -199,94 +150,122 @@
       "data_items": [
         {
           "name": "CPI YoY",
-          "value": "3.82%",
+          "value": "3.85%",
           "signal": "pos",
-          "note": "MoM +0.28% ▲ · 9T bình quân +3.88%"
+          "note": "MoM +0.21% ▲ · Lạm phát cơ bản 3.20%"
         },
         {
-          "name": "Lạm phát cơ bản",
-          "value": "2.71% YoY",
+          "name": "Bán lẻ & Dịch vụ",
+          "value": "+9.10%",
           "signal": "pos",
-          "note": "MoM +0.19% ▲ · Tám tháng trước +2.68%"
+          "note": "MoM +0.80% ▲ · Du lịch lữ hành tăng +16.20%"
         },
         {
-          "name": "Chỉ số giá Vàng",
-          "value": "+24.5% YoY",
+          "name": "Chỉ số giá vàng",
+          "value": "+22.40%",
           "signal": "neg",
-          "note": "MoM +1.85% ▲ · Biến động cùng thế giới"
+          "note": "MoM +1.85% ▲ · 9T bình quân tăng +38.20%"
         },
         {
           "name": "Chỉ số giá USD",
-          "value": "+2.15% YoY",
+          "value": "+2.10%",
           "signal": "neu",
-          "note": "MoM -0.12% ▼ · Tỷ giá hạ nhiệt"
+          "note": "MoM -0.35% ▼ · Tỷ giá hạ nhiệt cuối tháng"
+        }
+      ]
+    },
+    {
+      "id": "group3",
+      "tab": "Đầu tư & Vốn",
+      "title": "Giải ngân FDI và Vốn đầu tư công duy trì nhịp độ tích cực",
+      "tag": "g3",
+      "source_note": "Nguồn: Bộ KH&ĐT, TCTK",
+      "lead": "Vốn FDI thực hiện trong 9 tháng đầu năm 2026 đạt <span class=\"num\">17.3 tỷ USD</span>, tăng <span class=\"num\">8.90%</span> so với cùng kỳ năm trước. Giải ngân vốn đầu tư công đạt <span class=\"num\">64.5%</span> kế hoạch năm, tạo động lực thúc đẩy kinh tế quý IV.",
+      "graph": {
+        "type": "bar",
+        "title": "Vốn FDI thực hiện 9 tháng các năm (tỷ USD)",
+        "items": [
+          {
+            "label": "9T 2024",
+            "value": 14.8,
+            "color": "pos"
+          },
+          {
+            "label": "9T 2025",
+            "value": 15.9,
+            "color": "pos"
+          },
+          {
+            "label": "9T 2026",
+            "value": 17.3,
+            "color": "pos"
+          }
+        ]
+      },
+      "data_items": [
+        {
+          "name": "FDI Đăng ký 9T",
+          "value": "24.8 tỷ USD",
+          "signal": "pos",
+          "note": "YoY +11.60% ▲ · Chế biến chế tạo chiếm 62%"
+        },
+        {
+          "name": "FDI Giải ngân 9T",
+          "value": "17.3 tỷ USD",
+          "signal": "pos",
+          "note": "YoY +8.90% ▲ · Mức cao nhất 5 năm"
+        },
+        {
+          "name": "Giải ngân Đầu tư công",
+          "value": "64.5%",
+          "signal": "pos",
+          "note": "YoY +3.20% ▲ · Đạt 428 nghìn tỷ đồng"
         }
       ]
     }
   ],
   "risks": [
     {
-      "title": "Rủi ro địa chính trị & Chi phí vận tải biển",
-      "level": "high",
-      "detail": "Căng thẳng khu vực tiếp tục gây rủi ro nghẽn chuỗi cung ứng và biến động giá cước vận tải quốc tế."
+      "title": "Rủi ro biến động địa chính trị & chi phí vận tải",
+      "level": "amber",
+      "detail": "Chi phí logistics và giá nguyên vật liệu đầu vào chịu áp lực từ căng thẳng địa chính trị toàn cầu."
     },
     {
-      "title": "Áp lực tỷ giá trong giai đoạn cuối năm",
-      "level": "medium",
-      "detail": "Nhu cầu ngoại tệ tăng cho nhập khẩu nguyên liệu và thanh toán nợ có thể tạo sức ép ngắn hạn lên tỷ giá VND/USD."
+      "title": "Sức mua tiêu dùng nội địa cần thêm cú hích",
+      "level": "amber",
+      "detail": "Tăng trưởng bán lẻ duy trì ổn định nhưng tốc độ phục hồi của thị trường trong nước vẫn cần chính sách hỗ trợ."
     }
   ],
   "catalysts": [
     {
-      "title": "Đẩy mạnh giải ngân vốn đầu tư công Q4",
-      "detail": "Các dự án hạ tầng trọng điểm tăng tốc giải ngân kỳ vọng kích thích cầu nội địa và tạo sức lan tỏa lớn."
+      "title": "Tăng tốc giải ngân hạ tầng trọng điểm Q4",
+      "detail": "Giải ngân vốn đầu tư công cho các dự án cao tốc và đại dự án hạ tầng giúp kích thích tổng cầu cuối năm."
     },
     {
-      "title": "Chu kỳ tiêu dùng cao điểm cuối năm",
-      "detail": "Đơn hàng xuất khẩu nông sản, dệt may, điện tử gia tăng mạnh chuẩn bị cho mùa mua sắm lễ tết."
+      "title": "Đơn hàng xuất khẩu gia tăng theo mùa vụ",
+      "detail": "Nhu cầu hàng hóa tiêu dùng cuối năm từ thị trường Mỹ và EU thúc đẩy chuỗi sản xuất chế biến chế tạo."
     }
   ],
   "key_takeaways": [
-    "⭐ Sản xuất & Xuất khẩu là 2 động lực kép chính: PMI đạt 53.8 điểm và thặng dư TM 9 tháng chạm 21.5 tỷ USD.",
-    "Lạm phát hạ nhiệt xuống 3.82% tạo dư địa thuận lợi cho Ngân hàng Nhà nước điều hành chính sách tiền tệ hỗ trợ tăng trưởng.",
-    "FDI thực hiện đạt 17.3 tỷ USD khẳng định nền tảng vĩ mô vững chắc trước các biến động bên ngoài."
+    "⭐ Nền kinh tế duy trì đà hồi phục tích cực với PMI 52.5 điểm và IIP tăng 8.20%, dẫn dắt bởi ngành chế biến chế tạo.",
+    "Lạm phát được kiểm soát an toàn (CPI YoY 3.85%) giúp điều hành chính sách tiền tệ chủ động.",
+    "FDI giải ngân 9T2026 đạt 17.3 tỷ USD khẳng định niềm tin lâu dài của nhà đầu tư nước ngoài."
   ],
-  "_sources_coverage": {
-    "available": [
-      "NSO",
-      "Customs",
-      "PMI",
-      "VBMA",
-      "VNBA"
-    ],
-    "missing": [],
-    "user_override": false,
-    "retry_hint": null
-  },
   "_data_provenance": {
-    "_rule": "Mọi số trong report.json phải trace được tới 1 file cụ thể trong sources_cache/",
     "sources_files": {
       "nso_sep_2026.txt": [
         "CPI",
         "IIP",
-        "GDP",
         "XNK",
         "FDI",
         "bán lẻ",
-        "vận tải"
+        "đầu tư công"
       ],
-      "pmi_sep_2026_extracted.txt": [
-        "PMI headline + sub-indices"
+      "pmi_sep_2026.txt": [
+        "PMI headline"
       ],
       "customs_sep_2026.txt": [
-        "XNK chi tiết",
-        "cán cân thương mại"
-      ],
-      "vbma_weekly_sep_2026.txt": [
-        "LNH",
-        "tỷ giá",
-        "TPCP",
-        "TPDN"
+        "Cán cân thương mại"
       ]
     }
   }
