@@ -1,0 +1,287 @@
+{
+  "report_id": "vn-macro-2026-10",
+  "period": {
+    "month": 10,
+    "year": 2026,
+    "data_cutoff": "2026-10-31"
+  },
+  "verdict": "TÍCH CỰC — TĂNG TRƯỞNG ỔN ĐỊNH",
+  "verdict_class": "green",
+  "verdict_reason": "Chỉ số PMI duy trì trên ngưỡng mở rộng 52 điểm, xuất nhập khẩu tăng trưởng 2 con số, lạm phát tiếp tục nằm trong tầm kiểm soát dưới mức mục tiêu 4.5%.",
+  "hero_kpis": [
+    {
+      "label": "CPI YoY",
+      "value": "3.75",
+      "unit": "%",
+      "delta": "Dưới mục tiêu 4.5%",
+      "signal": "pos",
+      "flag": "green"
+    },
+    {
+      "label": "PMI Sản xuất",
+      "value": "52.3",
+      "unit": "điểm",
+      "delta": "Tháng thứ 6 mở rộng",
+      "signal": "pos",
+      "flag": "green"
+    },
+    {
+      "label": "Tăng trưởng XNK",
+      "value": "+14.2",
+      "unit": "% YoY",
+      "delta": "Xuất siêu 2.4 tỷ USD",
+      "signal": "pos",
+      "flag": "green"
+    },
+    {
+      "label": "Lãi suất LNH O/N",
+      "value": "4.15",
+      "unit": "%",
+      "delta": "MoM -0.25% ▼",
+      "signal": "neu",
+      "flag": "amber"
+    }
+  ],
+  "groups": [
+    {
+      "id": "group1",
+      "tab": "Sản xuất & Công nghiệp",
+      "title": "Sản xuất công nghiệp & Chỉ số PMI",
+      "tag": "g1",
+      "source_note": "Nguồn: NSO, S&P Global",
+      "lead": "IIP tháng 10 đạt mức tăng <span class=\"num\">8.60%</span> so với cùng kỳ, nhờ đóng góp chủ lực từ ngành chế biến chế tạo với mức tăng <span class=\"num\">9.80%</span>. Chỉ số PMI duy trì ở ngưỡng <span class=\"num\">52.3</span> điểm, khẳng định đà mở rộng hoạt động sản xuất liên tục.",
+      "graph": {
+        "type": "bar",
+        "title": "PMI Sản xuất tháng 8 - tháng 10/2026 (Mốc chuẩn 50)",
+        "items": [
+          {
+            "label": "T8",
+            "value": 51.8,
+            "color": "pos"
+          },
+          {
+            "label": "T9",
+            "value": 52.1,
+            "color": "pos"
+          },
+          {
+            "label": "T10",
+            "value": 52.3,
+            "color": "pos"
+          },
+          {
+            "label": "Mốc 50",
+            "value": 50,
+            "color": "target"
+          }
+        ]
+      },
+      "data_items": [
+        {
+          "name": "PMI Sản xuất",
+          "value": "52.3 điểm",
+          "signal": "pos",
+          "note": "MoM +0.2 điểm ▲ · Đơn hàng mới tăng mạnh"
+        },
+        {
+          "name": "IIP Toàn ngành",
+          "value": "+8.60%",
+          "signal": "pos",
+          "note": "YoY +8.60% ▲ · Chế biến chế tạo tăng 9.80%"
+        },
+        {
+          "name": "Chỉ số tiêu thụ ngành CBCĐT",
+          "value": "+9.10%",
+          "signal": "pos",
+          "note": "So cùng kỳ +9.10% ▲ · Tồn kho giảm nhẹ"
+        }
+      ]
+    },
+    {
+      "id": "group2",
+      "tab": "Ngoại thương & Đầu tư",
+      "title": "Ngoại thương, FDI & Bán lẻ",
+      "tag": "g2",
+      "source_note": "Nguồn: Tổng cục Hải quan, TCTK",
+      "lead": "Kim ngạch xuất khẩu tháng 10 ước đạt <span class=\"num\">35.8 tỷ USD</span>, tăng <span class=\"num\">14.2%</span> YoY; cán cân thương mại ghi nhận xuất siêu <span class=\"num\">2.41 tỷ USD</span>. FDI thực hiện lũy kế 10 tháng đạt <span class=\"num\">19.5 tỷ USD</span>, tăng 8.8% so với cùng kỳ năm trước.",
+      "graph": {
+        "type": "bar",
+        "title": "Cán cân thương mại tháng 10/2026 (Tỷ USD)",
+        "items": [
+          {
+            "label": "Xuất khẩu",
+            "value": 35.8,
+            "color": "pos"
+          },
+          {
+            "label": "Nhập khẩu",
+            "value": 33.39,
+            "color": "neu"
+          },
+          {
+            "label": "Xuất siêu",
+            "value": 2.41,
+            "color": "target"
+          }
+        ]
+      },
+      "data_items": [
+        {
+          "name": "Kim ngạch Xuất khẩu",
+          "value": "35.80 tỷ USD",
+          "signal": "pos",
+          "note": "YoY +14.20% ▲ · Điện tử & máy tính đóng góp chính"
+        },
+        {
+          "name": "Kim ngạch Nhập khẩu",
+          "value": "33.39 tỷ USD",
+          "signal": "neu",
+          "note": "YoY +12.50% ▲ · Nguyên phụ liệu sản xuất chiếm 88%"
+        },
+        {
+          "name": "Cán cân Thương mại",
+          "value": "+2.41 tỷ USD",
+          "signal": "pos",
+          "note": "Lũy kế 10 tháng xuất siêu +21.8 tỷ USD"
+        },
+        {
+          "name": "FDI Thực hiện (10T)",
+          "value": "19.50 tỷ USD",
+          "signal": "pos",
+          "note": "YoY +8.80% ▲ · Vốn đăng ký mới đạt 25.2 tỷ USD"
+        },
+        {
+          "name": "Tổng mức bán lẻ hàng hóa",
+          "value": "+9.50%",
+          "signal": "pos",
+          "note": "YoY +9.50% ▲ · Du lịch tiêu dùng phục hồi"
+        }
+      ]
+    },
+    {
+      "id": "group3",
+      "tab": "Tiền tệ & Giá cả",
+      "title": "Lạm phát, Lãi suất & Tỷ giá",
+      "tag": "g3",
+      "source_note": "Nguồn: TCTK, VBMA, VNBA",
+      "lead": "CPI tháng 10 chỉ tăng <span class=\"num\">3.75%</span> YoY, bình quân 10 tháng tăng <span class=\"num\">3.82%</span> — hạ nhiệt đáng kể so với các tháng quý II. Tỷ giá USD/VND hạ nhiệt nhẹ với mức giảm <span class=\"num\">-0.35%</span> MoM nhờ chỉ số DXY hạ nhiệt trên thị trường quốc tế.",
+      "graph": {
+        "type": "bar",
+        "title": "CPI YoY qua các tháng gần đây so với Mục tiêu 4.5%",
+        "items": [
+          {
+            "label": "T8",
+            "value": 4.12,
+            "color": "neg"
+          },
+          {
+            "label": "T9",
+            "value": 3.92,
+            "color": "pos"
+          },
+          {
+            "label": "T10",
+            "value": 3.75,
+            "color": "pos"
+          },
+          {
+            "label": "Mục tiêu",
+            "value": 4.5,
+            "color": "target"
+          }
+        ]
+      },
+      "data_items": [
+        {
+          "name": "CPI YoY",
+          "value": "3.75%",
+          "signal": "pos",
+          "note": "MoM +0.18% ▲ · Bình quân 10T +3.82%"
+        },
+        {
+          "name": "Lãi suất Liên ngân hàng O/N",
+          "value": "4.15%",
+          "signal": "neu",
+          "note": "MoM -0.25% ▼ · Thanh khoản hệ thống dồi dào"
+        },
+        {
+          "name": "Tỷ giá USD/VND (SBT)",
+          "value": "25,320 VND",
+          "signal": "pos",
+          "note": "MoM -0.35% ▼ · YTD +3.10%"
+        },
+        {
+          "name": "Tăng trưởng Tín dụng",
+          "value": "+9.20%",
+          "signal": "pos",
+          "note": "So với đầu năm +9.20% ▲ · Định hướng cả năm 15%"
+        }
+      ]
+    }
+  ],
+  "risks": [
+    {
+      "title": "Rủi ro địa chính trị toàn cầu",
+      "level": "high",
+      "detail": "Xung đột kéo dài ảnh hưởng tới chi phí vận tải biển quốc tế và giá năng lượng."
+    },
+    {
+      "title": "Tốc độ phục hồi sức mua nội địa",
+      "level": "medium",
+      "detail": "Tăng trưởng bán lẻ thực tế (trừ yếu tố giá) còn thấp hơn giai đoạn trước dịch."
+    }
+  ],
+  "catalysts": [
+    {
+      "title": "Đẩy mạnh giải ngân vốn đầu tư công quý IV",
+      "detail": "Các dự án hạ tầng trọng điểm chuyển sang giai đoạn về đích cuối năm."
+    },
+    {
+      "title": "Chu kỳ dịch chuyển chuỗi cung ứng FDI",
+      "detail": "Dòng vốn FDI công nghệ cao và bán dẫn tiếp tục tìm đến Việt Nam."
+    }
+  ],
+  "key_takeaways": [
+    "⭐ Sản xuất công nghiệp và xuất nhập khẩu tiếp tục là động lực tăng trưởng chính trong tháng 10/2026.",
+    "Lạm phát duy trì xu hướng hạ nhiệt dần, củng cố dư địa điều hành chính sách tiền tệ linh hoạt.",
+    "Tăng trưởng tín dụng nhích đà tiến tới mục tiêu 15% cho cả năm 2026."
+  ],
+  "_sources_coverage": {
+    "available": [
+      "NSO",
+      "Customs",
+      "PMI",
+      "VBMA",
+      "VNBA"
+    ],
+    "missing": [],
+    "user_override": false
+  },
+  "_data_provenance": {
+    "_rule": "Mọi số trong report.json phải trace được tới 1 file cụ thể trong sources_cache/",
+    "sources_files": {
+      "nso_oct_2026.txt": [
+        "CPI",
+        "IIP",
+        "FDI",
+        "Bán lẻ"
+      ],
+      "pmi_oct_2026.txt": [
+        "PMI Headline"
+      ],
+      "customs_oct_2026.txt": [
+        "Xuất khẩu",
+        "Nhập khẩu",
+        "Cán cân thương mại"
+      ],
+      "vbma_oct_2026.txt": [
+        "Lãi suất liên ngân hàng",
+        "TPCP"
+      ],
+      "vnba_oct_2026.txt": [
+        "Tăng trưởng tín dụng",
+        "Tỷ giá"
+      ]
+    }
+  }
+}
