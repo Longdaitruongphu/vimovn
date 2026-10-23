@@ -5,15 +5,15 @@
     "year": 2026,
     "data_cutoff": "2026-10-31"
   },
-  "verdict": "TÍCH CỰC — TĂNG TRƯỞNG ỔN ĐỊNH",
+  "verdict": "TÍCH CỰC — CÓ KIỂM SOÁT",
   "verdict_class": "green",
-  "verdict_reason": "IIP tháng 10 tăng 8.5% YoY, PMI duy trì trên ngưỡng mở rộng 52.4 điểm, cùng xuất siêu tháng 10 đạt 2.8 tỷ USD tạo nền tảng vững chắc cho tăng trưởng quý IV.",
+  "verdict_reason": "Sản xuất công nghiệp và xuất khẩu duy trì đà tăng trưởng tích cực; CPI YoY hạ nhiệt xuống 3.88% nằm trong mục tiêu 4.5%; thanh khoản hệ thống ngân hàng ổn định.",
   "hero_kpis": [
     {
       "label": "CPI YoY",
       "value": "3.88",
       "unit": "%",
-      "delta": "Trong mục tiêu 4.5%",
+      "delta": "Dưới mục tiêu 4.5%",
       "signal": "pos",
       "flag": "green"
     },
@@ -21,15 +21,15 @@
       "label": "PMI",
       "value": "52.4",
       "unit": "điểm",
-      "delta": "Tháng thứ 4 mở rộng",
+      "delta": "Mở rộng 7 tháng liên tiếp",
       "signal": "pos",
       "flag": "green"
     },
     {
-      "label": "XNK lũy kế",
-      "value": "645.2",
+      "label": "XNK TĐ",
+      "value": "68.5",
       "unit": "tỷ USD",
-      "delta": "Tăng 14.2% YoY",
+      "delta": "Xuất siêu +2.41 tỷ USD",
       "signal": "pos",
       "flag": "green"
     },
@@ -37,7 +37,7 @@
       "label": "Lãi suất LNH",
       "value": "4.15",
       "unit": "%",
-      "delta": "Giảm 0.25% MoM",
+      "delta": "Thanh khoản dồi dào",
       "signal": "pos",
       "flag": "green"
     }
@@ -45,78 +45,23 @@
   "groups": [
     {
       "id": "group1",
-      "tab": "Kinh tế thực",
-      "title": "Kinh tế thực — Tăng trưởng sản xuất & Ngoại thương",
+      "tab": "Giá cả & Sản xuất",
+      "title": "Lạm phát & Sản xuất công nghiệp",
       "tag": "g1",
-      "source_note": "Nguồn: TCTK, S&P Global, Tổng cục Hải quan",
-      "lead": "Sản xuất công nghiệp tháng 10 ghi nhận mức tăng <span class=\"num\">8.5%</span> YoY nhờ đơn hàng xuất khẩu phục hồi mạnh mẽ. Chỉ số PMI đạt <span class=\"num\">52.4</span> điểm, duy trì xu hướng mở rộng tháng thứ 4 liên tiếp, trong khi kim ngạch xuất nhập khẩu đạt <span class=\"num\">68.5</span> tỷ USD với xuất siêu <span class=\"num\">2.8</span> tỷ USD.",
+      "source_note": "Nguồn: TCTK, S&P Global",
+      "lead": "CPI YoY tháng 10 đạt <span class=\"num\">3.88%</span>, tiếp tục xu hướng hạ nhiệt sâu dưới mục tiêu <span class=\"num\">4.50%</span> của Quốc hội. Trong khi đó, chỉ số PMI đạt <span class=\"num\">52.4</span> điểm nhờ lượng đơn đặt hàng mới tăng đều đặn.",
       "graph": {
         "type": "bar",
-        "title": "IIP & PMI tháng 10/2026 (Mốc mở rộng PMI 50 điểm)",
-        "items": [
-          {
-            "label": "IIP YoY (%)",
-            "value": 8.5,
-            "color": "pos"
-          },
-          {
-            "label": "PMI (điểm)",
-            "value": 52.4,
-            "color": "pos"
-          },
-          {
-            "label": "Ngưỡng PMI",
-            "value": 50,
-            "color": "target"
-          }
-        ]
-      },
-      "data_items": [
-        {
-          "name": "IIP toàn ngành",
-          "value": "+8.5%",
-          "signal": "pos",
-          "note": "MoM +2.1% ▲ · Chế biến chế tạo +9.2%"
-        },
-        {
-          "name": "PMI Sản xuất",
-          "value": "52.4",
-          "signal": "pos",
-          "note": "T9 là 51.8 ▲ · Đơn hàng mới tăng mạnh"
-        },
-        {
-          "name": "Xuất khẩu hàng hóa",
-          "value": "35.65 tỷ USD",
-          "signal": "pos",
-          "note": "YoY +11.8% ▲ · 10T đạt 335.2 tỷ USD"
-        },
-        {
-          "name": "Cán cân thương mại",
-          "value": "+2.80 tỷ USD",
-          "signal": "pos",
-          "note": "10T xuất siêu +23.4 tỷ USD ▲"
-        }
-      ]
-    },
-    {
-      "id": "group2",
-      "tab": "Giá cả & Tiền tệ",
-      "title": "Giá cả & Tiền tệ — Lạm phát kiểm soát, Tỷ giá hạ nhiệt",
-      "tag": "g2",
-      "source_note": "Nguồn: TCTK, NHNN, VBMA",
-      "lead": "Lạm phát tháng 10 tiếp tục xu hướng hạ nhiệt khi CPI YoY chỉ tăng <span class=\"num\">3.88%</span>, thấp hơn đáng kể so với mức đỉnh <span class=\"num\">4.45%</span> hồi giữa năm. Áp lực tỷ giá USD/VND giảm bớt nhờ DXY điều chỉnh quanh mức <span class=\"num\">103.2</span> điểm và thanh khoản hệ thống ngân hàng được cải thiện.",
-      "graph": {
-        "type": "bar",
-        "title": "CPI YoY các tháng gần nhất vs Mục tiêu 4.5%",
+        "title": "Diễn biến CPI YoY so với mục tiêu 4.5%",
         "items": [
           {
             "label": "T8",
             "value": 4.12,
-            "color": "neg"
+            "color": "pos"
           },
           {
             "label": "T9",
-            "value": 3.98,
+            "value": 3.95,
             "color": "pos"
           },
           {
@@ -136,55 +81,165 @@
           "name": "CPI YoY",
           "value": "3.88%",
           "signal": "pos",
-          "note": "MoM +0.15% ▲ · Lạm phát cơ bản 3.2%"
+          "note": "MoM +0.15% ▲ · Cơ bản 3.20%"
         },
         {
-          "name": "Lãi suất LNH qua đêm",
-          "value": "4.15%",
+          "name": "PMI Sản xuất",
+          "value": "52.4 điểm",
           "signal": "pos",
-          "note": "MoM -0.25% ▼ · Bình ổn thanh khoản"
+          "note": "T9 đạt 51.9 điểm ▲ · Mở rộng tháng thứ 7"
         },
         {
-          "name": "Tỷ giá USD/VND (TT3)",
-          "value": "25,120",
-          "signal": "neu",
-          "note": "MoM -0.45% ▼ · Tăng 3.8% YTD"
+          "name": "IIP Toàn ngành",
+          "value": "+8.30%",
+          "signal": "pos",
+          "note": "Chế biến chế tạo +9.20% ▲ · 10T +8.10%"
+        },
+        {
+          "name": "Tổng bán lẻ",
+          "value": "+9.60%",
+          "signal": "pos",
+          "note": "YoY 10T +9.40% ▲ · Dịch vụ du lịch tăng mạnh"
+        }
+      ]
+    },
+    {
+      "id": "group2",
+      "tab": "Ngoại thương & FDI",
+      "title": "Xuất nhập khẩu & Đầu tư nước ngoài",
+      "tag": "g2",
+      "source_note": "Nguồn: Tổng cục Hải quan, Bộ KH&ĐT",
+      "lead": "Tổng kim ngạch xuất nhập khẩu tháng 10 đạt <span class=\"num\">68.5</span> tỷ USD, mang lại mức xuất siêu <span class=\"num\">2.41</span> tỷ USD. Dòng vốn FDI thực hiện 10 tháng ghi nhận kỷ lục <span class=\"num\">19.58</span> tỷ USD, tăng <span class=\"num\">8.8%</span> so với cùng kỳ.",
+      "graph": {
+        "type": "bar",
+        "title": "Cán cân thương mại các tháng gần nhất (tỷ USD)",
+        "items": [
+          {
+            "label": "T8",
+            "value": 2.15,
+            "color": "pos"
+          },
+          {
+            "label": "T9",
+            "value": 2.28,
+            "color": "pos"
+          },
+          {
+            "label": "T10",
+            "value": 2.41,
+            "color": "pos"
+          }
+        ]
+      },
+      "data_items": [
+        {
+          "name": "Kim ngạch xuất khẩu",
+          "value": "35.45 tỷ USD",
+          "signal": "pos",
+          "note": "YoY +12.10% ▲ · Điện tử & dệt may chủ lực"
+        },
+        {
+          "name": "Kim ngạch nhập khẩu",
+          "value": "33.04 tỷ USD",
+          "signal": "pos",
+          "note": "YoY +11.30% ▲ · Nhập nguyên liệu sản xuất chiếm 93%"
+        },
+        {
+          "name": "Cán cân thương mại",
+          "value": "+2.41 tỷ USD",
+          "signal": "pos",
+          "note": "Lũy kế 10T xuất siêu +23.21 tỷ USD"
         },
         {
           "name": "FDI thực hiện",
           "value": "19.58 tỷ USD",
           "signal": "pos",
-          "note": "YoY +8.8% ▲ · FDI đăng ký +11.2%"
+          "note": "YoY 10T +8.80% ▲ · Cao nhất 5 năm qua"
+        }
+      ]
+    },
+    {
+      "id": "group3",
+      "tab": "Tiền tệ & Tài chính",
+      "title": "Thị trường tiền tệ, Tỷ giá & Trái phiếu",
+      "tag": "g3",
+      "source_note": "Nguồn: VBMA, VNBA, NHNN",
+      "lead": "Lãi suất liên ngân hàng kỳ hạn qua đêm duy trì quanh mức <span class=\"num\">4.15%</span>, phản ánh thanh khoản toàn hệ thống khá dồi dào. Tín dụng toàn hệ thống tính đến cuối tháng 10 đạt mức tăng trưởng <span class=\"num\">10.25%</span> so với đầu năm.",
+      "graph": {
+        "type": "bar",
+        "title": "Lãi suất LNH qua đêm (%/năm)",
+        "items": [
+          {
+            "label": "T8",
+            "value": 4.42,
+            "color": "neu"
+          },
+          {
+            "label": "T9",
+            "value": 4.28,
+            "color": "pos"
+          },
+          {
+            "label": "T10",
+            "value": 4.15,
+            "color": "pos"
+          }
+        ]
+      },
+      "data_items": [
+        {
+          "name": "Lãi suất qua đêm LNH",
+          "value": "4.15%",
+          "signal": "pos",
+          "note": "Giảm 13 bps so với T9 ▼ · Thanh khoản ổn định"
+        },
+        {
+          "name": "Tỷ giá USD/VND trung tâm",
+          "value": "24.210 VND",
+          "signal": "neu",
+          "note": "YTD +2.15% ▲ · Áp lực DXY hạ nhiệt"
+        },
+        {
+          "name": "Tăng trưởng tín dụng",
+          "value": "+10.25%",
+          "signal": "pos",
+          "note": "So với đầu năm ▲ · Hướng tới mục tiêu 15%"
+        },
+        {
+          "name": "Phát hành TPDN",
+          "value": "28.5 nghìn tỷ",
+          "signal": "pos",
+          "note": "Nhóm ngân hàng & BĐS chiếm 82%"
         }
       ]
     }
   ],
   "risks": [
     {
-      "title": "Biến động địa chính trị & chi phí vận tải",
+      "title": "Biến động địa chính trị & Chi phí vận tải",
       "level": "high",
-      "detail": "Rủi ro xung đột kéo dài ảnh hưởng đến giá năng lượng và cước vận tải biển toàn cầu."
+      "detail": "Căng thẳng khu vực gia tăng có thể đẩy cước phí vận tải biển và giá nhiên liệu lên cao, ảnh hưởng chi phí doanh nghiệp xuất khẩu."
     },
     {
-      "title": "Áp lực đáo hạn TPDN cuối năm",
+      "title": "Sức mua tại các thị trường xuất khẩu chính",
       "level": "medium",
-      "detail": "Lượng TPDN bất động sản đáo hạn trong Q4/2026 còn lớn, gây áp lực lên dòng tiền doanh nghiệp."
+      "detail": "Lạm phát dai dẳng tại một số đối tác lớn có thể làm chậm đà hồi phục đơn hàng trong kỳ nghỉ cuối năm."
     }
   ],
   "catalysts": [
     {
-      "title": "Giải ngân đầu tư công bứt phá Q4",
-      "detail": "Các dự án hạ tầng trọng điểm tăng tốc hoàn thành kế hoạch năm 2026."
+      "title": "Đẩy mạnh giải ngân đầu tư công quý IV",
+      "detail": "Chính phủ quyết liệt chỉ đạo hoàn thành kế hoạch đầu tư công năm 2026, tạo hiệu ứng lan tỏa cho ngành xây dựng và vật liệu."
     },
     {
-      "title": "Mùa tiêu dùng cao điểm cuối năm",
-      "detail": "Sức mua nội địa và cầu nhập khẩu từ các thị trường đối tác lớn tăng trưởng tốt trong dịp lễ hội."
+      "title": "Nhu cầu tiêu dùng mùa lễ hội cuối năm",
+      "detail": "Sức mua nội địa tăng tốc trong quý IV hỗ trợ mạnh mẽ ngành bán lẻ, tiêu dùng và dịch vụ."
     }
   ],
   "key_takeaways": [
-    "⭐ Sản xuất và ngoại thương duy trì đà bứt phá mạnh mẽ, đảm bảo mục tiêu tăng trưởng GDP cả năm 2026.",
-    "Lạm phát duy trì dưới ngưỡng mục tiêu 4.5%, tạo dư địa cho NHNN giữ chính sách tiền tệ hỗ trợ.",
-    "Thanh khoản ngân hàng và tỷ giá hạ nhiệt giúp ổn định mặt bằng lãi suất thị trường."
+    "⭐ Kinh tế vĩ mô tháng 10/2026 tiếp tục duy trì trạng thái tích cực với lạm phát được kiểm soát tốt (3.88%) và chỉ số PMI duy trì trên ngưỡng mở rộng 52.4 điểm.",
+    "Xuất siêu lũy kế 10 tháng đạt hơn 23.2 tỷ USD cùng dòng vốn FDI giải ngân kỷ lục hỗ trợ tích cực cho nguồn cung ngoại tệ và ổn định tỷ giá.",
+    "Thanh khoản ngân hàng dồi dào, tăng trưởng tín dụng vượt 10% tạo dư địa cho mục tiêu tăng trưởng GDP cả năm 2026."
   ],
   "_sources_coverage": {
     "available": [
@@ -199,12 +254,14 @@
     "retry_hint": null
   },
   "_data_provenance": {
+    "_rule": "Mọi số trong report.json phải trace được tới 1 file cụ thể trong sources_cache/",
     "sources_files": {
       "nso_oct_2026.txt": [
         "CPI",
         "IIP",
-        "FDI",
-        "bán lẻ"
+        "GDP",
+        "Bán lẻ",
+        "FDI"
       ],
       "pmi_oct_2026.txt": [
         "PMI headline"
@@ -212,13 +269,15 @@
       "customs_oct_2026.txt": [
         "Xuất khẩu",
         "Nhập khẩu",
-        "Cán cân TM"
+        "Cán cân thương mại"
       ],
       "vbma_oct_2026.txt": [
-        "LNH",
-        "TPCP",
-        "TPDN",
-        "Tỷ giá"
+        "Lãi suất liên ngân hàng",
+        "Phát hành TPDN"
+      ],
+      "vnba_oct_2026.txt": [
+        "Tăng trưởng tín dụng",
+        "Tỷ giá USD/VND"
       ]
     }
   }
