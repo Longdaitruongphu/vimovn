@@ -1,43 +1,43 @@
 {
+  "report_id": "vn-macro-2026-11",
   "period": {
     "month": 11,
     "year": 2026,
     "data_cutoff": "2026-11-30"
   },
-  "report_id": "vn-macro-2026-11",
-  "verdict": "TĂNG TRƯỞNG MẠNH MẼ — LẠM PHÁT KIỂM SOÁT BẰNG PHẲNG",
+  "verdict": "TÍCH CỰC — TẮC NGHẼN HẠ NHIỆT",
   "verdict_class": "green",
-  "verdict_reason": "PMI sản xuất duy trì vùng mở rộng 52.4 điểm tháng thứ 5 liên tiếp, cán cân thương mại thặng dư $2.7 tỷ USD trong tháng 11 nâng lũy kế 11 tháng lên $24.8 tỷ USD. CPI YoY ở mức 3.85% nằm an toàn dưới trần mục tiêu 4.5%.",
+  "verdict_reason": "CPI YoY giảm về 3.82% nằm an toàn dưới mục tiêu 4.5%, sản xuất công nghiệp mở rộng đà tăng với PMI đạt 52.4 điểm và thặng dư thương mại tích lũy cán mốc 23.4 tỷ USD. Thanh khoản hệ thống ngân hàng cải thiện đưa lãi suất liên ngân hàng về mức 4.15%.",
   "hero_kpis": [
     {
       "label": "CPI YoY",
-      "value": "3.85",
-      "unit": "%",
-      "delta": "Dưới mục tiêu 4.5%",
-      "signal": "pos",
-      "flag": "green"
-    },
-    {
-      "label": "PMI Sản xuất",
-      "value": "52.4",
-      "unit": "điểm",
-      "delta": "Mở rộng 5 tháng liên tiếp",
-      "signal": "pos",
-      "flag": "green"
-    },
-    {
-      "label": "Xuất khẩu 11T",
-      "value": "382.5",
-      "unit": "tỷ USD",
-      "delta": "+14.2% YoY",
-      "signal": "pos",
-      "flag": "green"
-    },
-    {
-      "label": "Lãi suất LNH O/N",
       "value": "3.82",
       "unit": "%",
-      "delta": "-48 bps MoM",
+      "delta": "-0.13% so với T10",
+      "signal": "pos",
+      "flag": "green"
+    },
+    {
+      "label": "PMI Headline",
+      "value": "52.4",
+      "unit": "điểm",
+      "delta": "+0.6 điểm so với T10",
+      "signal": "pos",
+      "flag": "green"
+    },
+    {
+      "label": "Xuất siêu YTD",
+      "value": "23.4",
+      "unit": "tỷ USD",
+      "delta": "+1.9 tỷ USD trong T11",
+      "signal": "pos",
+      "flag": "green"
+    },
+    {
+      "label": "Lãi suất LNH Qua đêm",
+      "value": "4.15",
+      "unit": "%",
+      "delta": "-1.05% so với đỉnh T10",
       "signal": "pos",
       "flag": "green"
     }
@@ -45,103 +45,28 @@
   "groups": [
     {
       "id": "group1",
-      "tab": "Tăng trưởng & Sản xuất",
-      "title": "Sản xuất công nghiệp & Hoạt động thương mại",
+      "tab": "Lạm phát & Giá cả",
+      "title": "Giá cả — Lạm phát & Áp lực chi phí",
       "tag": "g1",
-      "source_note": "Nguồn: TCTK (NSO) & S&P Global",
-      "lead": "Chỉ số sản xuất toàn ngành công nghiệp (IIP) tháng 11 tăng <span class=\"num\">8.2%</span> YoY, trong đó ngành chế biến chế tạo đóng vai trò nòng cốt với mức tăng <span class=\"num\">9.1%</span>. Chỉ số PMI đạt <span class=\"num\">52.4</span> điểm nhờ đơn đặt hàng mới duy trì đà hồi phục ổn định. Xuất khẩu hàng hóa đạt <span class=\"num\">36.5</span> tỷ USD, mang lại mức thặng dư thương mại <span class=\"num\">2.7</span> tỷ USD trong tháng.",
-      "graph": {
-        "type": "bar",
-        "title": "Chỉ số PMI Sản xuất 5 tháng gần nhất (Mốc thu hẹp/mở rộng: 50.0)",
-        "items": [
-          {
-            "label": "T7",
-            "value": 51.2,
-            "color": "pos"
-          },
-          {
-            "label": "T8",
-            "value": 52.1,
-            "color": "pos"
-          },
-          {
-            "label": "T9",
-            "value": 51.8,
-            "color": "pos"
-          },
-          {
-            "label": "T10",
-            "value": 52.9,
-            "color": "pos"
-          },
-          {
-            "label": "T11",
-            "value": 52.4,
-            "color": "pos"
-          },
-          {
-            "label": "Ngưỡng",
-            "value": 50,
-            "color": "target"
-          }
-        ]
-      },
-      "data_items": [
-        {
-          "name": "PMI Sản xuất",
-          "value": "52.4 điểm",
-          "signal": "pos",
-          "note": "MoM -0.5 điểm · Đơn hàng mới tăng tháng thứ 5"
-        },
-        {
-          "name": "IIP Toàn ngành",
-          "value": "+8.2% YoY",
-          "signal": "pos",
-          "note": "MoM +1.2% ▲ · Chế biến chế tạo tăng +9.1%"
-        },
-        {
-          "name": "Kim ngạch Xuất khẩu",
-          "value": "36.5 tỷ USD",
-          "signal": "pos",
-          "note": "YoY +12.3% ▲ · Lũy kế 11T đạt 382.5 tỷ USD"
-        },
-        {
-          "name": "Cán cân Thương mại",
-          "value": "+2.7 tỷ USD",
-          "signal": "pos",
-          "note": "T10 thặng dư +2.1 tỷ USD · 11T thặng dư +24.8 tỷ USD"
-        }
-      ]
-    },
-    {
-      "id": "group2",
-      "tab": "Giá cả & Tiêu dùng",
-      "title": "Lạm phát, Vàng & Tổng mức bán lẻ",
-      "tag": "g2",
       "source_note": "Nguồn: TCTK (NSO)",
-      "lead": "Chỉ số giá tiêu dùng (CPI) YoY tháng 11 duy trì ở mức <span class=\"num\">3.85%</span>, giảm nhẹ so với mốc <span class=\"num\">3.98%</span> của tháng trước nhờ giá nhiên liệu thế giới hạ nhiệt. Tổng mức bán lẻ hàng hóa và doanh thu dịch vụ tiêu dùng tăng <span class=\"num\">9.6%</span> YoY, phản ánh sức mua nội địa cải thiện rõ rệt trong giai đoạn cận Tết.",
+      "lead": "Chỉ số CPI YoY tháng 11/2026 duy trì mức kiểm soát tích cực ở <span class=\"num\">3.82%</span>, giảm nhẹ so với mức <span class=\"num\">3.95%</span> của tháng trước và tiếp tục nằm an toàn dưới ngưỡng mục tiêu Quốc hội giao <span class=\"num\">4.50%</span>. Sự sụt giảm của giá hàng hóa năng lượng thế giới cùng chính sách tiền tệ linh hoạt đã giúp lạm phát cơ bản hạ nhiệt về <span class=\"num\">3.25%</span>.",
       "graph": {
         "type": "bar",
-        "title": "Diễn biến CPI YoY so với Mục tiêu Quốc hội 4.5%",
+        "title": "CPI YoY các tháng gần nhất vs Mục tiêu (%)",
         "items": [
           {
-            "label": "T8",
-            "value": 4.12,
-            "color": "pos"
-          },
-          {
             "label": "T9",
-            "value": 4.05,
-            "color": "pos"
+            "value": 4.1,
+            "color": "neg"
           },
           {
             "label": "T10",
-            "value": 3.98,
+            "value": 3.95,
             "color": "pos"
           },
           {
             "label": "T11",
-            "value": 3.85,
+            "value": 3.82,
             "color": "pos"
           },
           {
@@ -154,191 +79,225 @@
       "data_items": [
         {
           "name": "CPI YoY",
-          "value": "3.85%",
+          "value": "3.82%",
           "signal": "pos",
-          "note": "MoM +0.15% ▲ · Lạm phát cơ bản 3.22%"
+          "note": "MoM +0.18% ▲ · bình quân 11T +3.88%"
         },
         {
-          "name": "Bán lẻ Hàng hóa & Dịch vụ",
-          "value": "+9.6% YoY",
+          "name": "Lạm phát cơ bản YoY",
+          "value": "3.25%",
           "signal": "pos",
-          "note": "11T tăng +9.2% · Du lịch lữ hành tăng +18.4%"
+          "note": "MoM +0.12% ▲ · thấp hơn CPI chung"
         },
         {
-          "name": "Chỉ số giá Vàng",
-          "value": "+24.30% YoY",
+          "name": "Chỉ số giá vàng",
+          "value": "+22.40%",
           "signal": "neg",
-          "note": "MoM -1.15% ▼ · Bình quân 11T tăng +38.2%"
+          "note": "MoM +1.15% ▲ · ảnh hưởng tâm lý tiêu dùng"
+        },
+        {
+          "name": "Chỉ số giá USD",
+          "value": "+3.10%",
+          "signal": "neu",
+          "note": "MoM -0.45% ▼ · hạ nhiệt theo đà DXY"
+        }
+      ]
+    },
+    {
+      "id": "group2",
+      "tab": "Sản xuất & Ngoại thương",
+      "title": "Tăng trưởng — PMI, IIP & Cán cân thương mại",
+      "tag": "g2",
+      "source_note": "Nguồn: S&P Global, Tổng cục Hải quan",
+      "lead": "Chỉ số nhà quản trị mua hàng PMI sản xuất đạt <span class=\"num\">52.4</span> điểm trong tháng 11, ghi nhận chuỗi mở rộng tháng thứ 3 liên tiếp nhờ lượng đơn đặt hàng xuất khẩu mới phục hồi mạnh. Chỉ số IIP toàn ngành công nghiệp tăng <span class=\"num\">8.60%</span> YoY, trong khi xuất siêu tháng 11 đạt <span class=\"num\">1.90 tỷ USD</span>, nâng thặng dư thương mại tích lũy 11 tháng lên <span class=\"num\">23.40 tỷ USD</span>.",
+      "graph": {
+        "type": "bar",
+        "title": "Chỉ số PMI sản xuất Việt Nam (Mốc trung tính 50)",
+        "items": [
+          {
+            "label": "T9",
+            "value": 50.5,
+            "color": "pos"
+          },
+          {
+            "label": "T10",
+            "value": 51.8,
+            "color": "pos"
+          },
+          {
+            "label": "T11",
+            "value": 52.4,
+            "color": "pos"
+          },
+          {
+            "label": "Mốc 50",
+            "value": 50,
+            "color": "target"
+          }
+        ]
+      },
+      "data_items": [
+        {
+          "name": "PMI Headline",
+          "value": "52.4",
+          "signal": "pos",
+          "note": "T10 đạt 51.8 ▲ · đơn hàng mới tăng mạnh"
+        },
+        {
+          "name": "IIP toàn ngành",
+          "value": "+8.60%",
+          "signal": "pos",
+          "note": "Chế biến chế tạo tăng +9.80% YoY"
+        },
+        {
+          "name": "Kim ngạch Xuất khẩu",
+          "value": "35.20 tỷ USD",
+          "signal": "pos",
+          "note": "YoY +13.20% ▲ · 11T đạt 368.5 tỷ USD"
+        },
+        {
+          "name": "Kim ngạch Nhập khẩu",
+          "value": "33.30 tỷ USD",
+          "signal": "pos",
+          "note": "YoY +11.50% ▲ · máy móc & linh kiện chiếm 88%"
+        },
+        {
+          "name": "Cán cân thương mại YTD",
+          "value": "+23.40 tỷ USD",
+          "signal": "pos",
+          "note": "Tháng 11 xuất siêu +1.90 tỷ USD"
         }
       ]
     },
     {
       "id": "group3",
-      "tab": "Tiền tệ & Tài chính",
-      "title": "Thị trường Tiền tệ, Tỷ giá & Tín dụng",
+      "tab": "Đầu tư & Tiền tệ",
+      "title": "Tài chính — Vốn FDI & Thị trường Tiền tệ",
       "tag": "g3",
-      "source_note": "Nguồn: VBMA & VNBA",
-      "lead": "Lãi suất liên ngân hàng kỳ hạn qua đêm hạ nhiệt xuống <span class=\"num\">3.82%</span>, giảm <span class=\"num\">48 bps</span> so với tháng 10 nhờ thanh khoản hệ thống được bổ sung dồi dào qua kênh OMO. Tỷ giá USD/VND tại các ngân hàng thương mại giao dịch quanh mức <span class=\"num\">25,420</span> VND/USD. Tăng trưởng tín dụng toàn hệ thống tính đến cuối tháng 11 đạt <span class=\"num\">11.2%</span> so với đầu năm.",
+      "source_note": "Nguồn: VBMA, VNBA, Bộ KH&ĐT",
+      "lead": "Giải ngân vốn FDI thực hiện 11 tháng ghi nhận <span class=\"num\">21.80 tỷ USD</span>, tăng <span class=\"num\">7.20%</span> YoY và tiếp tục là trụ cột thanh khoản ngoại tệ. Trên thị trường tiền tệ, thanh khoản hệ thống dồi dào trở lại giúp lãi suất liên ngân hàng qua đêm lùi sâu về <span class=\"num\">4.15%</span> từ mức đỉnh căng thẳng <span class=\"num\">5.20%</span> hồi tháng 10.",
       "graph": {
         "type": "bar",
-        "title": "Lãi suất LNH qua đêm (O/N) qua các tháng (%)",
+        "title": "Lãi suất liên ngân hàng Qua đêm (%/năm)",
         "items": [
           {
-            "label": "T8",
-            "value": 4.55,
-            "color": "pos"
-          },
-          {
             "label": "T9",
-            "value": 4.2,
-            "color": "pos"
+            "value": 4.5,
+            "color": "neu"
           },
           {
             "label": "T10",
-            "value": 4.3,
-            "color": "pos"
+            "value": 5.2,
+            "color": "neg"
           },
           {
             "label": "T11",
-            "value": 3.82,
+            "value": 4.15,
             "color": "pos"
+          },
+          {
+            "label": "Trần OMO",
+            "value": 4.5,
+            "color": "target"
           }
         ]
       },
       "data_items": [
+        {
+          "name": "FDI thực hiện YTD",
+          "value": "21.80 tỷ USD",
+          "signal": "pos",
+          "note": "YoY +7.20% ▲ · mức cao nhất 5 năm"
+        },
+        {
+          "name": "FDI đăng ký YTD",
+          "value": "31.20 tỷ USD",
+          "signal": "pos",
+          "note": "YoY +11.60% ▲ · ngành công nghệ dẫn đầu"
+        },
         {
           "name": "Lãi suất LNH Qua đêm",
-          "value": "3.82%",
+          "value": "4.15%",
           "signal": "pos",
-          "note": "MoM -48 bps ▼ · Thanh khoản hệ thống dồi dào"
+          "note": "MoM -1.05% ▼ · thanh khoản ngân hàng dồi dào"
         },
         {
-          "name": "Tỷ giá USD/VND",
-          "value": "25,420 VND",
+          "name": "Tỷ giá USD/VND Trung tâm",
+          "value": "24,280",
           "signal": "pos",
-          "note": "MoM -0.45% ▼ · Hạ nhiệt từ đỉnh 25,530"
+          "note": "MoM -0.35% ▼ · giảm áp lực can thiệp ngoại tệ"
         },
         {
-          "name": "Tăng trưởng Tín dụng YTD",
-          "value": "+11.20%",
+          "name": "Tăng trưởng tín dụng YTD",
+          "value": "+11.80%",
           "signal": "pos",
-          "note": "Cùng kỳ năm ngoái +9.8% · Định hướng năm +15%"
-        },
-        {
-          "name": "Phát hành TPDN tháng",
-          "value": "32.4 nghìn tỷ",
-          "signal": "pos",
-          "note": "YoY +28.5% ▲ · Nhóm Ngân hàng chiếm 68%"
-        }
-      ]
-    },
-    {
-      "id": "group4",
-      "tab": "Đầu tư & Vốn FDI",
-      "title": "Đầu tư Công & Dòng vốn Nước ngoài",
-      "tag": "g4",
-      "source_note": "Nguồn: TCTK & Bộ KH&ĐT",
-      "lead": "Vốn FDI thực hiện trong 11 tháng đạt <span class=\"num\">21.5</span> tỷ USD, tăng <span class=\"num\">8.8%</span> so với cùng kỳ và là mức cao nhất cùng kỳ trong 5 năm qua. Giải ngân vốn đầu tư công đạt <span class=\"num\">72.4%</span> kế hoạch năm, tạo động lực lan tỏa tích cực cho kết cấu hạ tầng và thu hút vốn tư nhân.",
-      "graph": {
-        "type": "bar",
-        "title": "Vốn FDI thực hiện 11 tháng (tỷ USD)",
-        "items": [
-          {
-            "label": "11T-2023",
-            "value": 19.6,
-            "color": "pos"
-          },
-          {
-            "label": "11T-2024",
-            "value": 20.2,
-            "color": "pos"
-          },
-          {
-            "label": "11T-2025",
-            "value": 20.8,
-            "color": "pos"
-          },
-          {
-            "label": "11T-2026",
-            "value": 21.5,
-            "color": "pos"
-          }
-        ]
-      },
-      "data_items": [
-        {
-          "name": "FDI Thực hiện 11T",
-          "value": "21.5 tỷ USD",
-          "signal": "pos",
-          "note": "YoY +8.8% ▲ · Mức cao nhất 5 năm"
-        },
-        {
-          "name": "FDI Đăng ký 11T",
-          "value": "29.2 tỷ USD",
-          "signal": "pos",
-          "note": "YoY +7.5% ▲ · Ngành chế biến chiếm 63%"
-        },
-        {
-          "name": "Giải ngân Đầu tư công",
-          "value": "72.4% Kế hoạch",
-          "signal": "pos",
-          "note": "Cùng kỳ đạt 68.1% · Tăng tốc tháng cuối năm"
+          "note": "Mục tiêu cả năm 15.00%"
         }
       ]
     }
   ],
   "risks": [
     {
-      "title": "Áp lực lạm phát chi phí đẩy cận Tết",
-      "level": "MED",
-      "desc": "Giá nguyên vật liệu đầu vào và chi phí logistics quốc tế tăng nhẹ có thể gây áp lực lên biên lợi nhuận doanh nghiệp sản xuất."
+      "title": "Rủi ro địa chính trị và cước vận tải",
+      "level": "HIGH",
+      "description": "Căng thẳng khu vực làm gia tăng chi phí logistics đường biển, ảnh hưởng biên lợi nhuận doanh nghiệp xuất khẩu."
     },
     {
-      "title": "Biến động chính sách thương mại toàn cầu",
+      "title": "Áp lực đáo hạn Trái phiếu Doanh nghiệp",
       "level": "MED",
-      "desc": "Sự gia tăng rào cản phòng vệ thương mại tại một số thị trường xuất khẩu trọng điểm đòi hỏi sự thích ứng nhanh của ngành may mặc và điện tử."
+      "description": "Khối lượng trái phiếu bất động sản đáo hạn tập trung vào cuối quý 4 yêu cầu dòng tiền tái cấu trúc lớn."
+    },
+    {
+      "title": "Chính sách bảo hộ tại các thị trường lớn",
+      "level": "MED",
+      "description": "Nguy cơ áp thuế điều tra chống lẩn tránh đối với một số mặt hàng kim loại và điện tử xuất khẩu."
     }
   ],
   "catalysts": [
     {
-      "title": "Sức mua nội địa phục hồi cuối năm",
-      "type": "POSITIVE",
-      "desc": "Nhu cầu mua sắm và du lịch dịp lễ Tết đẩy mạnh tăng trưởng ngành bán lẻ và dịch vụ tiêu dùng."
+      "title": "Tăng tốc giải ngân Đầu tư công cuối năm",
+      "impact": "HIGH",
+      "description": "Các dự án hạ tầng giao thông trọng điểm thúc đẩy cầu nội địa cho vật liệu xây dựng và thi công."
     },
     {
-      "title": "Tăng tốc giải ngân đầu tư công",
-      "type": "POSITIVE",
-      "desc": "Các dự án hạ tầng giao thông trọng điểm entering giai đoạn hoàn thiện tạo hiệu ứng lan tỏa đến nhóm vật liệu và xây dựng."
+      "title": "Mùa tiêu dùng cao điểm Q4",
+      "impact": "HIGH",
+      "description": "Nhu cầu mua sắm Giáng sinh và chuẩn bị Tết Nguyên đán kích thích bán lẻ dịch vụ và hàng tiêu dùng."
+    },
+    {
+      "title": "Dòng vốn FDI bán dẫn & công nghệ",
+      "impact": "MED",
+      "description": "Các cam kết giải ngân từ các tập đoàn đa quốc gia giải tỏa áp lực tỷ giá và thúc đẩy chuyển giao công nghệ."
     }
   ],
   "key_takeaways": [
-    "⭐ Nền kinh tế duy trì đà phục hồi vững chắc với PMI 52.4 điểm và IIP tăng 8.2% YoY, được dẫn dắt bởi ngành chế biến chế tạo.",
-    "Lạm phát CPI 3.85% nằm an toàn dưới mục tiêu 4.5%, tạo dư địa cho Ngân hàng Nhà nước duy trì chính sách tiền tệ hỗ trợ tăng trưởng.",
-    "Dòng vốn FDI giải ngân đạt đỉnh 5 năm (21.5 tỷ USD) cùng thặng dư thương mại 11 tháng 24.8 tỷ USD tiếp tục củng cố nguồn cung ngoại tệ."
+    "⭐ Vĩ mô tháng 11/2026 duy trì đà tăng trưởng vững chắc với lạm phát YoY ở mức 3.82% và sản xuất công nghiệp gia tăng tốc độ mở rộng (PMI 52.4).",
+    "Cán cân thương mại tiếp tục tích lũy kỷ lục 23.4 tỷ USD, tạo vùng đệm ngoại hối quan trọng cho điều hành tỷ giá.",
+    "Thanh khoản thị trường tiền tệ bình ổn đưa lãi suất liên ngân hàng về 4.15%, tạo điều kiện thuận lợi cho dòng vốn tín dụng chảy vào nền kinh tế cuối năm."
   ],
   "_sources_coverage": {
     "available": [
-      "PMI",
       "NSO",
       "Customs",
+      "PMI",
       "VBMA",
       "VNBA"
     ],
     "missing": [],
-    "user_override": false
+    "user_override": false,
+    "retry_hint": null
   },
   "_data_provenance": {
+    "_rule": "Mọi số trong report.json phải trace được tới 1 file cụ thể trong sources_cache/",
     "sources_files": {
       "nso_nov_2026.txt": [
         "CPI",
         "IIP",
-        "Bán lẻ",
         "FDI",
-        "Đầu tư công"
+        "Bán lẻ"
       ],
-      "pmi_nov_2026.txt": [
-        "PMI headline",
-        "Đơn hàng mới"
+      "pmi_nov_2026_extracted.txt": [
+        "PMI Headline"
       ],
       "customs_nov_2026.txt": [
         "Xuất khẩu",
@@ -347,8 +306,7 @@
       ],
       "vbma_weekly_nov_2026.txt": [
         "Lãi suất LNH",
-        "Tỷ giá",
-        "TPDN"
+        "Tỷ giá USD/VND"
       ],
       "vnba_monthly_nov_2026.txt": [
         "Tăng trưởng tín dụng"
